@@ -1,0 +1,57 @@
+<div class="container mt-5">
+    <section id="actions" class="py-4 mb-4 mt-4 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a routerLink="/ofertas/{{ofertaSeleccionada.categoria}}" class="btn btn-light w-100"><i class="fas fa-arrow-left p-1"></i>Regresar a categoría</a>
+                </div>
+                <div class="col-md-9 text-end" *ngIf="ofertaSeleccionada.usuarioOfertante===this.usuario.id">
+                    <button (click)="modoVistaPrevia()" class="btn btn-primary btn-block" data-bs-toggle="modal" [attr.data-bs-target]="'#editarOfertaModal-'+ofertaSeleccionada.id">Editar oferta <i class="fas fa-edit"></i></button>
+                    <button (click)="eliminarOferta(ofertaSeleccionada)" class="btn btn-danger btn-block">Eliminar oferta <i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div *ngIf="ofertaSeleccionada.usuarioOfertante===this.usuario.id && this.vistaPrevia==true">
+        <h1 class="text-center mt-5 mb-5">Modo Vista Previa <button (click)="salirVistaPrevia()" class="btn btn-danger"><i class="fas fa-times"></i></button></h1>
+    </div>
+    <div class="card border-light" *ngIf="ofertaSeleccionada">
+        <div class="card-header">        
+            <div class="card-title">
+                <div class="row">
+                    <div class="col">
+                        <h3>{{ofertaSeleccionada.titulo}}</h3>
+                    </div>
+                    <div class="col">
+                        <h3 class="text-end">{{ofertaSeleccionada.salario}}€</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-subtitle text-muted">
+                <h6>{{ofertaSeleccionada.categoria}}</h6>
+            </div>
+        </div>
+
+
+        <div class="card-body text-center">
+            <img class="img-fluid" src="{{ofertaSeleccionada.imagen}}">
+        </div>
+        <div class="card-body">
+            <p>{{ofertaSeleccionada.descripcion}}</p>
+        </div>
+        <div class="card-footer text-muted">
+            <!--<div class="row">
+                <div class="col-md-2 p-0" *ngFor="let dia of ofertaSeleccionada.diasLaborales | keyvalue"><p class="small-letter"><strong>{{dia.key | slice:0:1 | uppercase}}-{{dia.value | slice:0:3}}</strong></p></div>
+            </div>-->
+            <div class="row">
+                <button (click)="solicitarEmpleo()" *ngIf="ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-wajoby">Solicitar Empleo <i class="fas fa-clipboard"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5 text-center" *ngIf="!ofertaSeleccionada">
+        <app-no-encontrado></app-no-encontrado>
+    </div>
+</div>
+<!--Tengo que sacar del modo vista previa al editar una oferta-->
+<app-modal-editar-oferta [oferta]="ofertaSeleccionada"></app-modal-editar-oferta>
+

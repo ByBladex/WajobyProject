@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-white p-1">
+    <div class="container">
+        <a routerLink="/" class="navbar-brand" id="navbar-brand">Wajoby</a>
+        <!--Menu no Collapse-->
+        <div class="d-flex order-sm-1 pr-2">
+            <ul class="navbar-nav flex-row">
+                <li *ngIf="isLoggedIn" class="nav-item">
+                    <a routerLink="/perfil" class="nav-link" id="item-username"><img width="30px" id="item-username-icon" src="{{image}}"></a>
+                </li>
+                <li *ngIf="isLoggedIn" class="nav-item">
+                    <a style="cursor: pointer;" (click)="logout()" class="nav-link" id="item-signOut"><i class="fas fa-sign-out-alt p-1"></i></a>
+                </li>
+            </ul>
+        </div>
+        <!--Boton Collapse-->
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" id="btn-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--Menu Collapse no logueado-->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <ul class="navbar-nav">
+                <li *ngIf="!isLoggedIn" class="nav-item" id="navbar-item">
+                    <a routerLink="/login" class="nav-link"><i class="fas fa-key p-1"></i>Iniciar Sesion</a>
+                </li>
+                <li *ngIf="!isLoggedIn" class="nav-item" id="navbar-item">
+                    <a routerLink="/registro" class="nav-link"><i class="fas fa-user-lock p-1"></i>Registrarse</a>
+                </li>
+            </ul>
+            <hr class="mt-2">
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,128 @@
+<div class="container">
+    <div class="col-md-12 text-center">
+      <div class="row">
+        <h6 class="lead">Encuentra trabajo más fácil que nunca</h6>
+        <h1 class="mb-5">¿Que tipo de empleo estás buscando?</h1>
+        <button class="btn btn-floating mt-5" (click)="section1Scroll()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="col-md-11">
+          <ul style="display: inline-flex" class="col-md-12 horizontalCarousel">
+            <li class="col-md-2" #section1>
+              <a routerLink="/ofertas/infantil" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon"class="p-4 mt-2 fas fa-baby-carriage"></i>
+                  <div class="card-body">
+                    <p class="card-text">Infantil</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/fitness" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-dumbbell"></i>
+                  <div class="card-body">
+                    <p class="card-text">Fitness</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/mecanica" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-tools"></i>
+                  <div class="card-body">
+                    <p class="card-text">Mecánica</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/construccion" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-hammer"></i>
+                  <div class="card-body">
+                    <p class="card-text">Construcción</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/hosteleria" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-utensils"></i>
+                  <div class="card-body">
+                    <p class="card-text">Hosteleria</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/educacion" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-book"></i>
+                  <div class="card-body">
+                    <p class="card-text">Educación</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/informatica" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-desktop"></i>
+                  <div class="card-body">
+                    <p class="card-text">Informática</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/comercio" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-cash-register"></i>
+                  <div class="card-body">
+                    <p class="card-text">Comercio</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/transporte" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-truck"></i>
+                  <div class="card-body">
+                    <p class="card-text">Transporte</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2">
+              <a routerLink="/ofertas/cuidados" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-wheelchair"></i>
+                  <div class="card-body">
+                    <p class="card-text">Cuidados</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li class="col-md-2" #section2>
+              <a routerLink="/ofertas/todas" class="">
+                <div class="card categories-item">
+                  <i id="categories-item-icon" class="p-4 mt-2 fas fa-ellipsis-h"></i>
+                  <div class="card-body">
+                    <p class="card-text">Otras</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <button class="btn btn-floating mt-5" (click)="section2Scroll()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>

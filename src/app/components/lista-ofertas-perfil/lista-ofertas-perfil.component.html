@@ -1,0 +1,13 @@
+<div class="container text-center">
+    <table class="table table-bordered" *ngIf="ofertas.length > 0">
+        <tr>
+            <th>Índice</th>
+            <th>Oferta</th>
+        </tr>
+        <tr *ngFor="let oferta of ofertas; let i = index">
+            <th>{{i+1}}</th>
+            <td><app-item-oferta-perfil [oferta]="oferta"></app-item-oferta-perfil></td>
+        </tr>
+    </table>
+    <p *ngIf="ofertas.length == 0">Todavía no has creado ninguna oferta de trabajo.</p>
+</div>

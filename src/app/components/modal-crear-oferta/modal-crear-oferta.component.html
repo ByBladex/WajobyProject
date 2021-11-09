@@ -1,0 +1,50 @@
+<!--Botones-->
+<a href="#" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#agregarOfertaModal"><i class="fas fa-plus p-1"></i>Crear Oferta</a>
+
+<!--Agregar Oferta modal-->
+<div class="modal fade" id="agregarOfertaModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light text-black">
+                <h5 class="modal-title">Crear Oferta</h5>
+                <button class="close btn" data-bs-dismiss="modal" #botonCerrar>
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <flash-messages></flash-messages>
+
+            <form #ofertaForm="ngForm" (ngSubmit)="agregarOferta(ofertaForm)">
+                <div class="modal-body text-start">
+                    <div class="form-group">
+                        <label for="titulo">Titulo</label>
+                        <input type="text" name="titulo" class="form-control" #titulo="ngModel" [(ngModel)]="oferta.titulo" [ngClass]="{'is-invalid': titulo.errors && titulo.touched}" required minlength="2">
+                        <div [hidden]="!titulo.errors?.required" class="invalid-feedback">Titulo requerido</div>
+                        <div [hidden]="!titulo.errors?.minlength" class="invalid-feedback">Debe contener al menos 2 caracteres</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripcion</label>
+                        <input type="text" name="descripcion" class="form-control" #descripcion="ngModel" [(ngModel)]="oferta.descripcion" [ngClass]="{'is-invalid': descripcion.errors && descripcion.touched}" required minlength="2">
+                        <div [hidden]="!descripcion.errors?.required" class="invalid-feedback">Descripcion requerida</div>
+                        <div [hidden]="!descripcion.errors?.minlength" class="invalid-feedback">Debe contener al menos 2 caracteres</div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="categoria">Categoria</label>
+                        <select name="categoria" class="form-select form-select-lg" #categoria="ngModel" [(ngModel)]="oferta.categoria" required [ngClass]="{'is-invalid': categoria.errors && categoria.touched}">
+                            <option *ngFor="let categoria of categorias" class="form-control" #pais [value]="categoria">{{categoria}}</option>
+                        </select>
+                        <div [hidden]="!categoria.errors?.required" class="invalid-feedback">Debe seleccionar un país</div>                     
+                    </div>
+                    <div class="form-group">
+                        <label for="salario">Salario</label>
+                        <input type="number" name="salario" class="form-control" #salario="ngModel" [(ngModel)]="oferta.salario" [ngClass]="{'is-invalid': salario.errors && salario.touched}" required>
+                        <div [hidden]="!salario.errors?.required" class="invalid-feedback">Salario requerido</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

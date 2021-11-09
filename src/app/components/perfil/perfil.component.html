@@ -1,0 +1,47 @@
+<section id="actions" class="py-4 mb-4 mt-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a routerLink="/" class="btn btn-light w-100"><i class="fas fa-arrow-left p-1"></i>Regresar al inicio</a>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" (click)="guardarValores()" class="btn btn-success w-100"><i class="fas fa-check p-1"></i>Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="datos">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>Datos</h4>
+            </div>                            
+            <div class="card-body">
+                <fieldset class="form-group">
+                    <img width="100px" src="{{usuarioActivo?.image}}" class="imagen-perfil">
+                    <h6>Nombre de usuario:<input type="text" readonly value="{{usuarioActivo?.usuario}}"></h6>
+                    <h6>Pais:<input type="text" readonly value={{usuarioActivo?.pais}}></h6>
+                    <legend>Fecha registro: {{usuarioActivo?.fechaRegistro.seconds * 1000 | date:'dd/MM/yyyy'}}</legend>
+                    <legend>Ultima sesion: {{usuarioActivo?.ultimaSesion.seconds * 1000 | date: 'd/MM/yyyy - HH:mm'}}</legend>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="cv" class="py-4 mb-4 mt-4">
+    <app-carga-curriculum *ngIf="usuarioActivo" [usuarioActivo]="usuarioActivo"></app-carga-curriculum>
+</section>
+<!--Me gustaría hacer un pequeño menú para dividir las ofertas de empleo creadas y las solicitudes de empleo enviadas-->
+<section id="header-perfil" class="py-4 mb-4 mt-4 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <h2>Tus ofertas de empleo creadas</h2>
+        </div>
+        <div class="row text-start mb-2">
+            <app-modal-crear-oferta></app-modal-crear-oferta>
+        </div>
+        <div class="row">
+            <app-lista-ofertas-perfil></app-lista-ofertas-perfil>
+        </div>
+    </div>
+</section>

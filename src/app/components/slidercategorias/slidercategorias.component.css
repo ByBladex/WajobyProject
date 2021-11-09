@@ -1,0 +1,27 @@
+a{
+    text-decoration: none;
+}
+
+ul{
+    display: inline-flex;
+    list-style: none;
+    overflow-x: hidden;
+}
+
+.categories-item{
+    color: black;
+    height: 100%;
+}
+.categories-item:hover{
+    color: #13c1ac;
+}
+
+.btn-floating{
+    border-radius: 30px;
+    width: 40px;
+    height: 60px;
+    background-color: #f9fafa;
+}
+.btn-floating:hover{
+    background-color: rgb(214, 214, 214);
+}

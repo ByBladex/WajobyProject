@@ -1,0 +1,41 @@
+<section id="actions" class="py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            
+        </div>
+    </div>
+</section>
+
+<flash-messages></flash-messages>
+
+<section id="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1>Login</h1>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="loginForm">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                    <input type="email" class="form-control" formControlName="email" placeHolder="Example@example.com" #email [ngClass]="{'is-invalid': loginForm.controls.email.errors?.required && loginForm.controls.email.touched || loginForm.controls.email.errors?.email}">
+                                <div [hidden]="this.loginForm.controls.email.errors?.required && this.loginForm.controls.email.errors?.email" class="invalid-feedback">Email válido requerido</div>                     
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="password">Contraseña</label>
+                                    <input type="password" class="form-control" formControlName="password" placeHolder="******" #password ng-minlength="6" [ngClass]="{'is-invalid': loginForm.controls.password.errors?.required && loginForm.controls.password.touched || loginForm.controls.password.errors?.minlength}">
+                                <div [hidden]="this.loginForm.controls.password.errors?.required && this.loginForm.controls.password.errors?.minlength" class="invalid-feedback">La contraseña debe contener mínimo 6 carácteres</div>                     
+                            </div>
+                            <br>
+                            <button (click)="login()" [disabled]="this.loginForm.controls.email.invalid || this.loginForm.controls.password.invalid" class="btn btn-primary btn-block w-100">Login</button>
+                            <div class="loginform-footer mt-1">¿Olvidaste tu contraseña? <a routerLink="/recuperacion"><span class="loginform-footer-bold">Recuperar</span></a></div>                        
+                            <div class="loginform-footer">¿Crear una cuenta? <a routerLink="/registro"><span class="loginform-footer-bold">Registrate</span></a></div>              
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

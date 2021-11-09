@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-3">
+        <p>{{ofertaSeleccionada.titulo}}</p>       
+    </div>
+    <div class="col-md-3">
+        <p *ngIf="oferta.descripcion.length > 60">{{oferta.descripcion | slice:0:60}}...</p>
+        <p *ngIf="oferta.descripcion.length <= 60">{{oferta.descripcion}}</p>
+    </div>
+    <div class="col-md-6">
+        <a routerLink="/ofertas/{{ofertaSeleccionada.categoria}}/{{ofertaSeleccionada.id}}" class="btn btn-primary">Detalles <i class="fas fa-external-link-alt"></i></a>
+        <button (click)="eliminarOferta(ofertaSeleccionada)" class="btn btn-danger">Eliminar <i class="fas fa-trash"></i></button>
+    </div>
+</div>
+
+<app-modal-editar-oferta [oferta]="oferta"></app-modal-editar-oferta>

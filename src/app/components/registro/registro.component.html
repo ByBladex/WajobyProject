@@ -1,0 +1,56 @@
+<section id="actions" class="py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            
+        </div>
+    </div>
+</section>
+
+<flash-messages></flash-messages>
+
+<section id="registro">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1>Registro</h1>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="registroForm" (submit)="registro()">
+                            <div class="form-group">
+                                <label for="username">Usuario</label>
+                                    <input type="text" class="form-control" formControlName="username" placeHolder="Example" #username ng-maxlength="16" [ngClass]="{'is-invalid': registroForm.controls.username.errors?.required && registroForm.controls.username.touched}">
+                                <div [hidden]="!this.registroForm.controls.username.errors?.required" class="invalid-feedback">Usuario requerido</div>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="email">Email</label>
+                                    <input type="email" class="form-control" formControlName="email" placeHolder="Example@example.com" #email [ngClass]="{'is-invalid': registroForm.controls.email.errors?.required && registroForm.controls.email.touched || registroForm.controls.email.errors?.email}">
+                                <div [hidden]="this.registroForm.controls.email.errors?.required && this.registroForm.controls.email.errors?.email" class="invalid-feedback">Email válido requerido</div>                     
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="password">Contraseña</label>
+                                <input type="password" class="form-control" formControlName="password" placeHolder="******" #password ng-minlength="6" [ngClass]="{'is-invalid': registroForm.controls.password.errors?.required && registroForm.controls.password.touched || registroForm.controls.password.errors?.minlength}">
+                                <div [hidden]="this.registroForm.controls.password.errors?.required && this.registroForm.controls.password.errors?.minlength" class="invalid-feedback">La contraseña debe contener mínimo 6 carácteres</div>                     
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="pais">Pais</label>
+                                <select name="pais" class="form-select form-select-lg" formControlName="pais" required [ngClass]="{'is-invalid': registroForm.controls.pais.errors?.required && registroForm.controls.pais.touched}">
+                                    <option *ngFor="let pais of paises" class="form-control" #pais [value]="pais.nombre">{{pais.nombre}}</option>
+                                </select>
+                                <div [hidden]="!this.registroForm.controls.pais.errors?.required" class="invalid-feedback">Debe seleccionar un país</div>                     
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="checkbox" class="form-check-input" formControlName="terms" #terms required [ngClass]="{'is-invalid': registroForm.controls.terms.errors?.required && registroForm.controls.terms.touched}"> Declaro que he leido y acepto: <a routerLink="/terminos">Terminos de servicio</a>
+                                <div [hidden]="!this.registroForm.controls.terms.errors?.required" class="invalid-feedback">Debe aceptar los Terminos de servicio</div>                     
+                            </div>
+                            <br>
+                            <input type="submit" [disabled]="this.registroForm.controls.username.invalid || this.registroForm.controls.email.invalid || this.registroForm.controls.password.invalid || this.registroForm.controls.pais.invalid || this.registroForm.controls.terms.invalid" value="Registro" class="btn btn-primary btn-block w-100">
+                            <div class="loginform-footer">¿Ya estás registrado? Inicia sesión <a routerLink="/login"><span class="loginform-footer-bold">aquí</span></a></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

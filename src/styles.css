@@ -1,0 +1,149 @@
+.link {
+    text-decoration:none;
+    color: black;
+}
+.link:hover{
+    color: #13c1ac;
+}
+
+#item-username-icon{
+    border-radius: 100px;
+}
+
+.imagen-perfil{
+    border-radius: 50px;
+}
+
+.small-letter{
+    font-size: 10px;
+}
+.medium-letter{
+    font-size: 16px;
+}
+
+.is-invalid {
+    border-style: solid;
+    border-color: red;
+    border-radius: 5px;
+}
+
+.form-control-feedback {
+    color: red;
+}
+
+#item-signOut:hover{
+    color: #13c1ac;
+}
+
+.nav-link{
+    text-align: right;
+}
+
+#navbar-item>a:hover{
+    color: #13c1ac;
+    border-bottom: #13c1ac;
+    border-bottom: solid;
+    padding: 5px;
+}
+#categories-item-icon{
+    font-size: 50px;
+}
+.categories-item:hover{
+    border-bottom: #13c1ac;
+    border-bottom: solid;
+}
+
+@media screen and (max-width: 575px){
+    #navbar-item>a:hover{
+        border-bottom: none;
+    }
+}
+
+.fa-sign-out-alt{
+    font-size: 20px;
+}
+
+
+@media screen and (max-width: 767px) {
+    #item-username{
+        font-size: 17px;
+    }
+    #item-1{
+        font-size: 0px;
+    }
+    #item-1-icon{
+        font-size: 20px;
+    }
+    #item-2{
+        font-size: 0px;
+    }
+    #item-2-icon{
+        font-size: 20px;
+    }
+    .fa-sign-out-alt{
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 575px) {
+    #item-username{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    #item-1{
+        font-size: 16px;
+    }
+    #item-1-icon{
+        font-size: 16px;
+    }
+    #item-2{
+        font-size: 16px;
+    }
+    #item-2-icon{
+        font-size: 16px;
+    }
+    .fa-sign-out-alt{
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 414px) {
+    #navbar-brand{
+        font-size: 18px ;
+    }
+}
+@media screen and (max-width: 391px) {
+    #item-username-icon{
+        width: 25px;
+    }
+    .fa-sign-out-alt{
+        font-size: 19px;
+    }
+}
+@media screen and (max-width: 380px) {
+    #navbar-brand{
+        font-size: 15px ;
+    }
+}
+@media screen and (max-width: 359px) {
+    #item-username{
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+}
+@media screen and (max-width: 343px) {
+    #item-username{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+@media screen and (max-width: 338px) {
+    .fa-sign-out-alt{
+        font-size: 16px;
+    }
+}
+
+body{
+    min-width: 336px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
