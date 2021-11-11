@@ -52,7 +52,7 @@
         <app-no-encontrado></app-no-encontrado>
     </div>
 </div>
-<div class="container mt-5" *ngIf="ofertaSeleccionada.usuarioOfertante===this.usuario.id">
+<div class="container mt-5" *ngIf="ofertaSeleccionada.usuarioOfertante===this.usuario.id && this.solicitudesOferta.length>0">
     <button class="btn btn-secondary" (click)="mostrarOcultar()">Mostrar solicitudes de empleo</button>
     <ul class="list-group mt-3" [hidden]="ocultado">
         <li class="list-group-item" *ngFor="let usuario of listadoUsuariosSolicitudes">{{usuario.id}}</li><!--Hacr un listado bonito con los datos de los usuarios (a poder ser en  modal)-->

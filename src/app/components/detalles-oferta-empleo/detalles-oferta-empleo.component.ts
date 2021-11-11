@@ -20,7 +20,7 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
 
   categoria:string;
   id:string;
-  ofertaSeleccionada:Oferta={};
+  ofertaSeleccionada:Oferta;
   usuario:Usuario={};
   usuarioSolicitud: UsuarioSolicitud={};
   ofertaSolicitud: OfertaSolicitud = {};
