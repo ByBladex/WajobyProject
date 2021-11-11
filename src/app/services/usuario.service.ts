@@ -1,3 +1,4 @@
+import { OfertaSolicitud } from './../models/ofertaSolicitud';
 import { OfertasService } from './ofertas.service';
 import { Oferta } from './../models/oferta';
 import { Timestamp } from '@firebase/firestore';
@@ -58,8 +59,9 @@ export class UsuarioService {
     */
   }
 
-  solicitarOferta(){
-    //falta del lado del usuario (ya esta del lado de la oferta)  
+  solicitarOferta(oferta:OfertaSolicitud,id:string){
+    this.db.doc<Oferta>(`usuarios/${id}/solicitudes/${oferta.id}`).set(oferta);
+    console.log("Empleo ",oferta.id," guardado en el usuario: ",id);
   }
 
   async getCV(idUsuario:string){
@@ -80,7 +82,7 @@ export class UsuarioService {
 
   editarOferta(oferta:Oferta, idOferta:string, idUsuario:string){
     this.db.doc<Oferta>(`usuarios/${idUsuario}/ofertas/${idOferta}`).delete();
-    this.db.doc<Oferta>(`usuarios/${idUsuario}/ofertas/${this.ofertasService.genId(oferta)}`).set(oferta);
+    this.db.doc<Oferta>(`usuarios/${idUsuario}/ofertas/${oferta.id}`).set(oferta);
     console.log("Oferta editada correctamente en el usuario: "+idUsuario, oferta.id, oferta.titulo);
   }
 

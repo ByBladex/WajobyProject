@@ -1,6 +1,6 @@
 import { Timestamp } from '@firebase/firestore';
 
-export interface UsuarioSolicitud {
+export interface OfertaSolicitud {
     id?:string;
     fechaSolicitud?:Timestamp;
 }

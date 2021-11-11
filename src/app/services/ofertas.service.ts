@@ -59,8 +59,12 @@ export class OfertasService {
     }
 
     registrarSolicitud(oferta:Oferta, usuario:UsuarioSolicitud){
-      this.db.doc(`empleos/${oferta.categoria}/ofertas/${this.genId(oferta)}/solicitudes/${usuario.id}`).set(usuario);
+      this.db.doc(`empleos/${oferta.categoria}/ofertas/${oferta.id}/solicitudes/${usuario.id}`).set(usuario);
       console.log("Empleo ",oferta.titulo," solicitado por el usuario: ",usuario.id);
+    }
+
+    getSolicitudesOferta(oferta:Oferta){
+      return this.db.doc(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).collection('solicitudes').valueChanges();
     }
 
     registrarOferta(oferta:Oferta){
@@ -70,7 +74,7 @@ export class OfertasService {
 
     editarOferta(oferta:Oferta, idOfertaAntigua:string, categoriaOfertaAntigua:string){
       this.db.doc<Oferta>(`empleos/${categoriaOfertaAntigua}/ofertas/${idOfertaAntigua}`).delete();
-      this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${this.genId(oferta)}`).set(oferta);
+      this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).set(oferta);
       console.log("Oferta editada correctamente: "+oferta.id, oferta.titulo);
     }
 
