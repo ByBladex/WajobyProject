@@ -31,7 +31,6 @@ export class ModalEditarOfertaComponent implements OnInit {
   @ViewChild("botonCerrar") botonCerrar:ElementRef;
   @Input('oferta') ofertaSeleccionada:Oferta;
 
-  idOfertaAntigua: string;
   categoriaOfertaAntigua: string;
 
   categorias= []=['infantil','fitness','mecanica','construccion','hosteleria','educacion','informatica','comercio','transporte','cuidados'];
@@ -40,7 +39,6 @@ export class ModalEditarOfertaComponent implements OnInit {
 
   ngOnInit(): void {
     this.oferta = this.ofertaSeleccionada;
-    this.idOfertaAntigua=this.ofertaSeleccionada.id;
     this.categoriaOfertaAntigua=this.ofertaSeleccionada.categoria;
   }
 
@@ -55,11 +53,11 @@ export class ModalEditarOfertaComponent implements OnInit {
       this.loginService.getAuth().subscribe(auth => {
         if(auth){
           value.usuarioOfertante = auth.uid;
-          value.id=this.ofertasService.genId(value);
-          this.ofertasService.editarOferta(value, this.idOfertaAntigua ,this.categoriaOfertaAntigua);
-          this.usuarioService.editarOferta(value,this.idOfertaAntigua,auth.uid);
+          value.id = this.ofertaSeleccionada.id;
+          this.ofertasService.editarOferta(value,this.categoriaOfertaAntigua);
+          this.usuarioService.editarOferta(value,auth.uid);
           this.cerrarModal();
-          this.router.navigate(['/ofertas/'+this.oferta.categoria+"/"+this.ofertasService.genId(this.oferta)]);
+          this.router.navigate(['/ofertas/'+this.oferta.categoria+"/"+this.oferta.id]);
         }
       })
     }

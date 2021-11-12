@@ -32,13 +32,14 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
   constructor(private router: Router,private route: ActivatedRoute, private ofertasService: OfertasService, private loginService: LoginService, private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
+    this.listadoUsuariosSolicitudes = [];
     this.categoria = this.route.snapshot.params['categoria'];
     this.id = this.route.snapshot.params['id'];
     this.ofertasService.getOferta(this.categoria,this.id).subscribe(oferta => {
       if(oferta)
         this.ofertaSeleccionada = oferta;
-        this.ofertaSolicitud.id =  oferta.id;
-        this.ofertasService.getSolicitudesOferta(this.ofertaSeleccionada).subscribe(solicitudes => {
+        this.ofertaSolicitud.id = oferta.id;
+        this.ofertasService.getSolicitudesOferta(this.ofertaSeleccionada.id, this.ofertaSeleccionada.categoria).subscribe(solicitudes => {
           this.solicitudesOferta = solicitudes;
           this.solicitudesOferta.map(solicitudUsuario =>{
             this.usuarioService.getUsuario(solicitudUsuario.id).subscribe(user => {
@@ -82,7 +83,8 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
   solicitarEmpleo(){
      //al solicitar empleo quiero que muestre una toast. Tambien la quiero para editar y eliminar ofertas
     if(this.usuario.id != null){
-      this.usuarioSolicitud.fechaSolicitud, this.ofertaSolicitud.fechaSolicitud = Timestamp.now(); //Así ambos tienen la misma fecha y hora
+      this.usuarioSolicitud.fechaSolicitud = Timestamp.now();
+      this.ofertaSolicitud.fechaSolicitud = Timestamp.now();
       this.ofertasService.registrarSolicitud(this.ofertaSeleccionada,this.usuarioSolicitud);
       this.usuarioService.solicitarOferta(this.ofertaSolicitud, this.usuario.id);
     }

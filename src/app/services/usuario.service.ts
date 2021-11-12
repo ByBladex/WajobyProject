@@ -80,9 +80,8 @@ export class UsuarioService {
     console.log("Oferta registrada correctamente en el usuario: "+id, oferta.id, oferta.titulo);
   }
 
-  editarOferta(oferta:Oferta, idOferta:string, idUsuario:string){
-    this.db.doc<Oferta>(`usuarios/${idUsuario}/ofertas/${idOferta}`).delete();
-    this.db.doc<Oferta>(`usuarios/${idUsuario}/ofertas/${oferta.id}`).set(oferta);
+  editarOferta(oferta:Oferta, idUsuario:string){
+    this.db.doc<Oferta>(`usuarios/${idUsuario}/ofertas/${oferta.id}`).update(oferta);
     console.log("Oferta editada correctamente en el usuario: "+idUsuario, oferta.id, oferta.titulo);
   }
 

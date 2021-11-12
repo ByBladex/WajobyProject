@@ -63,8 +63,8 @@ export class OfertasService {
       console.log("Empleo ",oferta.titulo," solicitado por el usuario: ",usuario.id);
     }
 
-    getSolicitudesOferta(oferta:Oferta){
-      return this.db.doc(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).collection('solicitudes').valueChanges();
+    getSolicitudesOferta(ofertaId:string, categoria:string){
+      return this.db.doc(`empleos/${categoria}/ofertas/${ofertaId}`).collection('solicitudes').valueChanges();
     }
 
     registrarOferta(oferta:Oferta){
@@ -72,9 +72,19 @@ export class OfertasService {
       console.log("Oferta registrada correctamente: "+oferta.id, oferta.titulo);
     }
 
-    editarOferta(oferta:Oferta, idOfertaAntigua:string, categoriaOfertaAntigua:string){
-      this.db.doc<Oferta>(`empleos/${categoriaOfertaAntigua}/ofertas/${idOfertaAntigua}`).delete();
+    editarOferta(oferta:Oferta, categoriaOfertaAntigua:string){
+      this.db.doc<Oferta>(`empleos/${categoriaOfertaAntigua}/ofertas/${oferta.id}`).delete();
       this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).set(oferta);
+      if(categoriaOfertaAntigua != oferta.categoria){
+        this.getSolicitudesOferta(oferta.id,categoriaOfertaAntigua).subscribe(solicitudes => {
+          if(solicitudes.length>0){
+            solicitudes.map(solicitud => {
+              this.db.doc(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).collection('solicitudes').doc(solicitud.id).set(solicitud);
+              this.db.doc(`empleos/${categoriaOfertaAntigua}/ofertas/${oferta.id}`).collection('solicitudes').doc(solicitud.id).delete();
+            })
+          }
+        })
+      }
       console.log("Oferta editada correctamente: "+oferta.id, oferta.titulo);
     }
 

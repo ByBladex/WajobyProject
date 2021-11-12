@@ -20,7 +20,7 @@ export class BusquedaOfertasEmpleoComponent implements OnInit {
   ngOnInit(): void {
     this.categoria = this.route.snapshot.params['categoria'];
     this.observableOfertas = this.ofertasService.getOfertas(this.categoria);
-    this.observableOfertas.subscribe(oferta => this.ofertas=oferta);
+    this.observableOfertas.subscribe(ofertas => this.ofertas=ofertas);
   }
 
 }
