@@ -30,6 +30,8 @@ import { ItemOfertaPerfilComponent } from './components/item-oferta-perfil/item-
 import { NoJobComponent } from './components/no-job/no-job.component';
 import { ModalEditarOfertaComponent } from './components/modal-editar-oferta/modal-editar-oferta.component';
 import { CargaCurriculumComponent } from './components/carga-curriculum/carga-curriculum.component';
+import { ListaSolicitudesPerfilComponent } from './components/lista-solicitudes-perfil/lista-solicitudes-perfil.component';
+import { ItemSolicitudPerfilComponent } from './components/item-solicitud-perfil/item-solicitud-perfil.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { CargaCurriculumComponent } from './components/carga-curriculum/carga-cu
     ItemOfertaPerfilComponent,
     NoJobComponent,
     ModalEditarOfertaComponent,
-    CargaCurriculumComponent
+    CargaCurriculumComponent,
+    ListaSolicitudesPerfilComponent,
+    ItemSolicitudPerfilComponent
   ],
   imports: [
     BrowserModule,

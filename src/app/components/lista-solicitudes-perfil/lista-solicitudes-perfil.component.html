@@ -1,0 +1,17 @@
+<div class="container text-center">
+    <table class="table table-bordered" *ngIf="solicitudes.length > 0">
+        <tr>
+            <th>Índice</th>
+            <th>Id</th>
+            <th>Fecha</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let solicitud of solicitudes; let i = index">
+            <th>{{i+1}}</th>
+            <td>{{solicitud.id}}</td>
+            <td>{{solicitud.fechaSolicitud.seconds * 1000 | date: 'd/MM/yyyy - HH:mm'}}</td>
+            <td><app-item-solicitud-perfil [solicitud]="solicitud"></app-item-solicitud-perfil></td>
+        </tr>
+    </table>
+    <p *ngIf="solicitudes.length == 0">Todavía no has solicitado ninguna oferta de trabajo.</p>
+</div>

@@ -47,10 +47,13 @@
 }
 #categories-item-icon{
     font-size: 50px;
+    position: relative;
+    top: 0px;
+    transition: top ease 0.5s;
 }
 .categories-item:hover{
-    border-bottom: #13c1ac;
-    border-bottom: solid;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.171);
+    top: -10px;
 }
 
 @media screen and (max-width: 575px){

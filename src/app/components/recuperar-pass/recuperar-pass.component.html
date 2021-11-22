@@ -1,1 +1,19 @@
-<p>recuperar-pass works!</p>
+<flash-messages class="text-center"></flash-messages>
+<form [formGroup]="formEmail">
+    <div class="card mt-5 col-md-6 mx-auto">
+        <div class="card-body">
+            <h3 class="card-tittle text-center">Por favor introduzca su email</h3>
+            <div class="form-group">
+                <div>
+                    <input type="email" class="form-control" formControlName="email" placeHolder="Example@example.com" #email required [ngClass]="{'is-invalid': formEmail.controls.email.errors?.required && formEmail.controls.email.touched || formEmail.controls.email.errors?.email}">
+                    <div [hidden]="this.formEmail.controls.email.errors?.required && this.formEmail.controls.email.errors?.email" class="invalid-feedback">Es necesario que introduzcas un email válido</div>                     
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button class="btn btn-primary w-100 mt-4" [disabled]="this.formEmail.controls.email.invalid" (click)="resetPassword()">Envar recuperación de contraseña</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+

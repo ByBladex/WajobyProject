@@ -39,6 +39,7 @@ export class CargaCurriculumComponent implements OnInit {
   cvSeleccionado(event:any){
     if(event.target.files.length > 0 && event.target.files[0].type == 'application/pdf'){
       this.file = event.target.files[0];
+      console.log(this.file.size)
     }
     else{
       this.file = null;
@@ -49,7 +50,7 @@ export class CargaCurriculumComponent implements OnInit {
   }
 
   cargarCV(){
-      if(this.file && this.file.type == 'application/pdf'){
+      if(this.file && this.file.type == 'application/pdf' && this.file.size <= 2097152){ //si el archivo existe, el tipo es pdf y su tamaño es <= 2mb
         const filePath = `users_cv/${this.usuario.id}/${this.usuario.id}_cv.pdf`;
         const ref = this.storage.ref(filePath);
         const task = this.storage.upload(filePath,this.file);

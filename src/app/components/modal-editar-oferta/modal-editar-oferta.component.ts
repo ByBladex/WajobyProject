@@ -6,6 +6,7 @@ import { OfertasService } from './../../services/ofertas.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Oferta } from './../../models/oferta';
 import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-editar-oferta',
@@ -58,6 +59,9 @@ export class ModalEditarOfertaComponent implements OnInit {
           this.usuarioService.editarOferta(value,auth.uid);
           this.cerrarModal();
           this.router.navigate(['/ofertas/'+this.oferta.categoria+"/"+this.oferta.id]);
+          this.router.navigateByUrl('/', {skipLocationChange: false}).then(() => {
+            this.router.navigate(['/ofertas/'+this.oferta.categoria+"/"+this.oferta.id]);
+          });  
         }
       })
     }

@@ -1,0 +1,7 @@
+.navbar{
+    border-bottom: 1px solid;
+    border-color: rgba(236,239,241,.5);
+    position: sticky;
+    z-index: 1;
+    top: 0;
+}

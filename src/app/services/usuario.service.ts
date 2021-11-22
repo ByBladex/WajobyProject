@@ -43,6 +43,11 @@ export class UsuarioService {
     return this.usuario;
   }
 
+  //Este metodo es para recuperar las solicitudes de cada usuario que aparece en las solicitudes de la oferta a eliminar
+  getSolicitudes(id:string): Observable<OfertaSolicitud[]>{
+    return this.db.collection<OfertaSolicitud>(`usuarios/${id}/solicitudes`).valueChanges();
+  }
+
   getOfertas(id:string): Observable<Oferta[]> {
     return this.db.collection<Oferta>(`usuarios/${id}/ofertas`).valueChanges();
   
@@ -64,6 +69,12 @@ export class UsuarioService {
     console.log("Empleo ",oferta.id," guardado en el usuario: ",id);
   }
 
+  eliminarSolicitud(oferta:OfertaSolicitud,id:string){
+    this.db.doc<Oferta>(`usuarios/${id}/solicitudes/${oferta.id}`).delete();
+    this.ofertasService.eliminarSolicitudUser(oferta,id);
+    console.log("Solicitud ",oferta.id," eliminada en el usuario: ",id);
+  }
+
   async getCV(idUsuario:string){
     const filePath = `users_cv/${idUsuario}/${idUsuario}_cv.pdf`;
     const ref = this.storage.ref(filePath);
@@ -76,16 +87,28 @@ export class UsuarioService {
   }
 
   registrarOferta(oferta:Oferta,id:string){
-    this.db.doc<Oferta>(`usuarios/${id}/ofertas/${this.ofertasService.genId(oferta)}`).set(oferta);
+    this.db.doc<Oferta>(`usuarios/${id}/ofertas/${oferta.id}`).set(oferta);
     console.log("Oferta registrada correctamente en el usuario: "+id, oferta.id, oferta.titulo);
   }
 
   editarOferta(oferta:Oferta, idUsuario:string){
+    this.ofertasService.getSolicitudesOferta(oferta.id, oferta.categoria).subscribe(solicitudes => {
+      solicitudes.map(solicitud => {
+        this.db.doc<OfertaSolicitud>(`usuarios/${solicitud.id}/solicitudes/${oferta.id}`).update({categoria: oferta.categoria});
+      })
+    })
     this.db.doc<Oferta>(`usuarios/${idUsuario}/ofertas/${oferta.id}`).update(oferta);
     console.log("Oferta editada correctamente en el usuario: "+idUsuario, oferta.id, oferta.titulo);
   }
 
   eliminarOferta(oferta:Oferta, id:string){
+    this.ofertasService.getSolicitudesOferta(oferta.id,oferta.categoria).subscribe(solicitudes => {
+      if(solicitudes.length>0){
+        solicitudes.map(solicitud => {
+          this.db.doc(`usuarios/${solicitud.id}`).collection('solicitudes').doc(oferta.id).delete();
+        })
+      }
+    })
     this.db.doc<Oferta>(`usuarios/${id}/ofertas/${oferta.id}`).delete();
     console.log("Oferta eliminada del usuario correctamente: "+oferta.id);
   }

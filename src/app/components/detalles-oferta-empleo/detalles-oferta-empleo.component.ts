@@ -21,13 +21,14 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
   categoria:string;
   id:string;
   ofertaSeleccionada:Oferta;
-  usuario:Usuario={};
-  usuarioSolicitud: UsuarioSolicitud={};
+  usuario:Usuario = {};
+  usuarioSolicitud: UsuarioSolicitud = {};
   ofertaSolicitud: OfertaSolicitud = {};
-  vistaPrevia:boolean=false;
-  solicitudesOferta:DocumentData[];
-  listadoUsuariosSolicitudes:Usuario[]=[];
-  ocultado:boolean=true;
+  vistaPrevia:boolean = false;
+  solicitudesOferta:DocumentData[] = [];
+  listadoUsuariosSolicitudes:Usuario[] = [];
+  ocultado:boolean = true;
+  solicitada: boolean = false;
 
   constructor(private router: Router,private route: ActivatedRoute, private ofertasService: OfertasService, private loginService: LoginService, private usuarioService: UsuarioService) { }
 
@@ -36,9 +37,10 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
     this.categoria = this.route.snapshot.params['categoria'];
     this.id = this.route.snapshot.params['id'];
     this.ofertasService.getOferta(this.categoria,this.id).subscribe(oferta => {
-      if(oferta)
+      if(oferta){
         this.ofertaSeleccionada = oferta;
         this.ofertaSolicitud.id = oferta.id;
+        this.ofertaSolicitud.categoria = oferta.categoria;
         this.ofertasService.getSolicitudesOferta(this.ofertaSeleccionada.id, this.ofertaSeleccionada.categoria).subscribe(solicitudes => {
           this.solicitudesOferta = solicitudes;
           this.solicitudesOferta.map(solicitudUsuario =>{
@@ -47,14 +49,21 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
             })
           })
         });
-        this.loginService.getAuth().subscribe(auth => {
-          if(auth){
-            this.usuarioService.getUsuario(auth.uid).subscribe(user => {
-              this.usuario = user;
-              this.usuarioSolicitud.id = this.usuario.id;
+      }
+    })
+    this.loginService.getAuth().subscribe(auth => {
+      if(auth){
+        this.usuarioService.getUsuario(auth.uid).subscribe(user => {
+          this.usuario = user;
+          this.usuarioSolicitud.id = this.usuario.id;
+          this.usuarioService.getSolicitudes(user.id).subscribe(solicitudes => {
+            solicitudes.map(solicitud => {
+              if(solicitud.id === this.ofertaSolicitud.id)
+                this.solicitada = true;
             })
-          }
+          })
         })
+      }
     })
   }
 
@@ -90,6 +99,13 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
     }
     else
       console.log('necesitas loguearte para solicitar empleo');
+  }
+
+  eliminarSolicitud(oferta:OfertaSolicitud){
+    if(this.usuario.id != null){
+      this.usuarioService.eliminarSolicitud(oferta, this.usuario.id);
+      this.solicitada = false;
+    }
   }
 
   mostrarOcultar(){

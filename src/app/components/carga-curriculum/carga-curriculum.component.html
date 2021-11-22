@@ -3,7 +3,7 @@
     <a class="btn btn-primary" *ngIf="urlCv" href="{{urlCv | async}}" target="_blank">Ver curriculum</a>
     <button class="btn btn-danger" *ngIf="urlCv"><i class="fas fa-trash" (click)="eliminarCV()"></i></button>
     <div style="width: fit-content;" class="m-auto">
-        <label for="cvpdf" class="form-label">Sube tu curriculum en formato pdf</label>
+        <label for="cvpdf" class="form-label">Sube tu curriculum en formato pdf (max. 2MB)</label>
         <input class="form-control" type="file" id="cvpdf" accept=".pdf" (change)="cvSeleccionado($event)">
         <div class="progress mt-2" [hidden]="(uploadPercent | async) == null">
             <div class="progress-bar progress-bar-striped bg-wajoby" role="progressbar" [style.width]="(uploadPercent | async) + '%'"><span *ngIf="(uploadPercent | async)>0">{{uploadPercent | async}}%</span></div>

@@ -31,7 +31,7 @@
                     <div class="form-group mt-3">
                         <label for="categoria">Categoria</label>
                         <select name="categoria" class="form-select form-select-lg" #categoria="ngModel" [(ngModel)]="oferta.categoria" required [ngClass]="{'is-invalid': categoria.errors && categoria.touched}">
-                            <option *ngFor="let categoria of categorias" class="form-control" #pais [value]="categoria">{{categoria}}</option>
+                            <option *ngFor="let categoria of categorias" class="form-control" #pais [value]="categoria">{{categoria | uppercase}}</option>
                         </select>
                         <div [hidden]="!categoria.errors?.required" class="invalid-feedback">Debe seleccionar un país</div>                     
                     </div>

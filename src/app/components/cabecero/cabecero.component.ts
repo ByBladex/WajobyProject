@@ -40,7 +40,7 @@ export class CabeceroComponent implements OnInit {
   logout(){
     this.loginService.logout();
     this.isLoggedIn = false;
-    window.location.reload();
     this.router.navigate(['/login']);
+    window.location.reload();
   }
 }

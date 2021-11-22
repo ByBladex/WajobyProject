@@ -49,7 +49,7 @@ export class ModalCrearOfertaComponent implements OnInit {
       this.loginService.getAuth().subscribe(auth => {
         if(auth){
           value.usuarioOfertante = auth.uid;
-          value.id=this.ofertasService.genId(value);
+          value.id=this.ofertasService.genId();
           this.ofertasService.registrarOferta(value);
           this.usuarioService.registrarOferta(value,auth.uid);
           this.ofertaForm.resetForm();

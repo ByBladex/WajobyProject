@@ -1,3 +1,4 @@
+import { OfertaSolicitud } from './../models/ofertaSolicitud';
 import { UsuarioSolicitud } from './../models/usuarioSolicitud';
 import { Usuario } from './../models/usuario';
 import { Oferta } from './../models/oferta';
@@ -5,12 +6,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { v4 as uuidv4 } from 'uuid';
 @Injectable({
   providedIn: 'root'
 })
 export class OfertasService {
-
     ofertasCollection: AngularFirestoreCollection<Oferta>;
     ofertasDoc: AngularFirestoreDocument<Oferta>;
     oferta: Observable<Oferta>;
@@ -36,10 +36,15 @@ export class OfertasService {
         return this.oferta;
     }
 
+    generarID(){
+      let myId = uuidv4();
+      console.log(myId);
+    }
+
     //convierte el titulo de la oferta, pasa los espacios en blanco a guiones '-' y le añade la id del usuarioOfertante
-    genId(value:Oferta){
-      var id = value.titulo.replace(/\s/g,'-')
-      return  id+'-'+value.usuarioOfertante
+    genId(){
+      let id = uuidv4();
+      return id;
     }
 
     getOfertas(categoria:string): Observable<Oferta[]> {
@@ -63,12 +68,17 @@ export class OfertasService {
       console.log("Empleo ",oferta.titulo," solicitado por el usuario: ",usuario.id);
     }
 
+    eliminarSolicitudUser(oferta:OfertaSolicitud,idUsuario:string){
+      this.db.doc(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).collection('solicitudes').doc(idUsuario).delete();
+      console.log("Solicitud de la oferta ",oferta.id," eliminada por el usuario: ",idUsuario);
+    }
+
     getSolicitudesOferta(ofertaId:string, categoria:string){
       return this.db.doc(`empleos/${categoria}/ofertas/${ofertaId}`).collection('solicitudes').valueChanges();
     }
 
     registrarOferta(oferta:Oferta){
-      this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${this.genId(oferta)}`).set(oferta);
+      this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).set(oferta);
       console.log("Oferta registrada correctamente: "+oferta.id, oferta.titulo);
     }
 
@@ -89,6 +99,13 @@ export class OfertasService {
     }
 
     eliminarOferta(oferta:Oferta){
+      this.getSolicitudesOferta(oferta.id,oferta.categoria).subscribe(solicitudes => {
+        if(solicitudes.length>0){
+          solicitudes.map(solicitud => {
+            this.db.doc(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).collection('solicitudes').doc(solicitud.id).delete();
+          })
+        }
+      })
       this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).delete();
       console.log("Oferta eliminada correctamente: "+oferta.id);
     }
