@@ -92,10 +92,14 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
   solicitarEmpleo(){
      //al solicitar empleo quiero que muestre una toast. Tambien la quiero para editar y eliminar ofertas
     if(this.usuario.id != null){
-      this.usuarioSolicitud.fechaSolicitud = Timestamp.now();
-      this.ofertaSolicitud.fechaSolicitud = Timestamp.now();
-      this.ofertasService.registrarSolicitud(this.ofertaSeleccionada,this.usuarioSolicitud);
-      this.usuarioService.solicitarOferta(this.ofertaSolicitud, this.usuario.id);
+      if(this.usuario.cv){
+        this.usuarioSolicitud.fechaSolicitud = Timestamp.now();
+        this.ofertaSolicitud.fechaSolicitud = Timestamp.now();
+        this.ofertasService.registrarSolicitud(this.ofertaSeleccionada,this.usuarioSolicitud);
+        this.usuarioService.solicitarOferta(this.ofertaSolicitud, this.usuario.id);
+      }
+      else
+        console.log('Para solicitar empleo debes subir antes tu cv a tu perfil');  
     }
     else
       console.log('necesitas loguearte para solicitar empleo');
