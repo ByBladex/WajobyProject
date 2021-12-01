@@ -2,6 +2,7 @@ import { UsuarioService } from './../../services/usuario.service';
 import { LoginService } from './../../services/login.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-cabecero',
@@ -12,9 +13,7 @@ export class CabeceroComponent implements OnInit {
 
   isLoggedIn: boolean; //si el usuario está logeado o no
   userId: string; //id del usuario autenticado
-  loggedInUser: string; //user del usuario autenticado
-  puntos: number; //puntos del usuario autenticado
-  image: string='';
+  image: Observable<string>;
   
 
   constructor(private loginService: LoginService, private router: Router, private usuarioService: UsuarioService) { }
@@ -25,9 +24,13 @@ export class CabeceroComponent implements OnInit {
         this.isLoggedIn = true;
         this.userId = auth.uid;
         this.usuarioService.getUsuario(this.userId).subscribe(user => {
-          if(user){
-            this.loggedInUser = user.usuario;
-            this.image = user.image;
+          if(user.image){
+            this.usuarioService.getImage(user.id).then(image => {
+              this.image = image;
+            })
+          }
+          else{
+            this.image = of('https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/assets%2Favatar_default.png?alt=media&token=0601b1da-cca2-4663-a4b1-0fb8a731c848')
           }
         })
       }

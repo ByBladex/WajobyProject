@@ -14,7 +14,7 @@
             <div class="col-md-6 mx-auto">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h1>Login</h1>
+                        <h1>Iniciar Sesión</h1>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="loginForm">
@@ -29,7 +29,7 @@
                                 <div [hidden]="this.loginForm.controls.password.errors?.required && this.loginForm.controls.password.errors?.minlength" class="invalid-feedback">La contraseña debe contener mínimo 6 carácteres</div>                     
                             </div>
                             <br>
-                            <button (click)="login()" [disabled]="this.loginForm.controls.email.invalid || this.loginForm.controls.password.invalid" class="btn btn-primary btn-block w-100">Login</button>
+                            <button (click)="login()" [disabled]="this.loginForm.controls.email.invalid || this.loginForm.controls.password.invalid" class="btn btn-wajoby btn-block w-100">Login</button>
                             <div class="loginform-footer mt-2">¿Olvidaste tu contraseña? <a routerLink="/recuperacion"><span class="loginform-footer-bold">Recuperar</span></a></div>                        
                             <div class="loginform-footer">¿Crear una cuenta? <a routerLink="/registro"><span class="loginform-footer-bold">Registrate</span></a></div>              
                         </form>

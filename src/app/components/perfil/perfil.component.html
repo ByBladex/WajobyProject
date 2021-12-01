@@ -5,25 +5,76 @@
                 <a routerLink="/" class="btn btn-light w-100"><i class="fas fa-arrow-left p-1"></i>Regresar al inicio</a>
             </div>
             <div class="col-md-3">
-                <button type="submit" (click)="guardarValores()" class="btn btn-success w-100"><i class="fas fa-check p-1"></i>Guardar Cambios</button>
+                <button type="submit" (click)="cargarImagenPerfil()" class="btn btn-success w-100"><i class="fas fa-check p-1"></i>Guardar Cambios</button>
             </div>
         </div>
     </div>
 </section>
 <section id="datos">
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h4>Datos</h4>
-            </div>                            
-            <div class="card-body">
-                <fieldset class="form-group">
-                    <img width="100px" src="{{usuarioActivo?.image}}" class="imagen-perfil">
-                    <h6>Nombre de usuario:<input type="text" readonly value="{{usuarioActivo?.usuario}}"></h6>
-                    <h6>Pais:<input type="text" readonly value={{usuarioActivo?.pais}}></h6>
-                    <legend>Fecha registro: {{usuarioActivo?.fechaRegistro.seconds * 1000 | date:'dd/MM/yyyy'}}</legend>
-                    <legend>Ultima sesion: {{usuarioActivo?.ultimaSesion.seconds * 1000 | date: 'd/MM/yyyy - HH:mm'}}</legend>
-                </fieldset>
+    <div class="container text-center">
+        <div class="col-md-10 m-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Datos</h4>
+                </div>                            
+                <div class="card-body">
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="imgProfile" *ngIf="image">
+                                    <div class="overlay">
+                                        <i id="hidden_icon" width="100px" class="fas fa-upload"></i>
+                                        <img width="100px" src="{{image |async}}" class="imagen-perfil">
+                                    </div>
+                                </label>
+                                <div class="row justify-content-center">
+                                    <div class="progress mt-2 col-md-2" [hidden]="!(uploadPercent | async)">
+                                        <div class="progress-bar progress-bar-striped bg-wajoby" role="progressbar" [style.width]="(uploadPercent | async) + '%'"><span *ngIf="(uploadPercent | async)>0">{{uploadPercent | async}}%</span></div>
+                                    </div>
+                                </div>
+                                <input class="form-control" type="file" id="imgProfile" accept=".jpg,.jpeg,.png" (change)="imagenSeleccionada($event)"  style="display: none;">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <div>
+                                        <input type="text" class="form-control" value="{{usuarioActivo?.nombre}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Apellidos</label>
+                                    <div>
+                                        <input type="text" class="form-control" value="{{usuarioActivo?.apellidos}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Pais</label>
+                                    <div>
+                                        <select name="pais" class="form-select form-select-md">
+                                            <option *ngFor="let pais of paises" class="form-control" #pais [value]="pais.nombre" [selected]="usuarioActivo.pais === pais.nombre">{{pais.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>                        
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Teléfono</label>
+                                    <div>
+                                        <input type="text" class="form-control" value="{{usuarioActivo?.telefono}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
         </div>
     </div>
@@ -47,7 +98,7 @@
                 <div class="row text-center mt-5">
                     <h2>Tus ofertas de empleo creadas</h2>
                 </div>
-                <div class="row text-start mb-2">
+                <div class="row text-start mb-2" style="margin-left: 10px;">
                     <app-modal-crear-oferta></app-modal-crear-oferta>
                 </div>
                 <div class="row">

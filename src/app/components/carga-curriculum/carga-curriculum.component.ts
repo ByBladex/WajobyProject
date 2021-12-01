@@ -6,7 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { animate } from '@angular/animations';
 
 @Component({
   selector: 'app-carga-curriculum',

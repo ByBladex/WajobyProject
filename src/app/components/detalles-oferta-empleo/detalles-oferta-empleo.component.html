@@ -6,7 +6,7 @@
                     <a routerLink="/ofertas/{{ofertaSeleccionada?.categoria}}" class="btn btn-light w-100"><i class="fas fa-arrow-left p-1"></i>Regresar a categoría</a>
                 </div>
                 <div class="col-md-9 text-end" *ngIf="ofertaSeleccionada.usuarioOfertante===this.usuario.id">
-                    <button (click)="modoVistaPrevia()" class="btn btn-primary btn-block" data-bs-toggle="modal" [attr.data-bs-target]="'#editarOfertaModal-'+ofertaSeleccionada.id">Editar oferta <i class="fas fa-edit"></i></button>
+                    <button (click)="modoVistaPrevia()" class="btn btn-primary btn-block" style="margin-right: 25px;" data-bs-toggle="modal" [attr.data-bs-target]="'#editarOfertaModal-'+ofertaSeleccionada.id">Editar oferta <i class="fas fa-edit"></i></button>
                     <button (click)="eliminarOferta(ofertaSeleccionada)" class="btn btn-danger btn-block">Eliminar oferta <i class="fas fa-trash"></i></button>
                 </div>
             </div>

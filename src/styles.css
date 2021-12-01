@@ -6,12 +6,31 @@
     color: #13c1ac;
 }
 
-#item-username-icon{
+#item-user-icon{
     border-radius: 100px;
 }
 
+.overlay{
+    position: relative;
+}
+
 .imagen-perfil{
-    border-radius: 50px;
+    border-radius: 50%;
+}
+
+#hidden_icon{
+    position: absolute;
+    display: none;
+    border-radius: 50%;
+    top: 0px;
+    left: 0px;
+    padding: 42%;
+    background-color: rgba(0, 0, 0, 0.486);
+    color: white;
+}
+
+.overlay:hover #hidden_icon{
+    display: block;
 }
 
 .small-letter{
@@ -68,7 +87,7 @@
 
 
 @media screen and (max-width: 767px) {
-    #item-username{
+    #item-user{
         font-size: 17px;
     }
     #item-1{
@@ -88,7 +107,7 @@
     }
 }
 @media screen and (max-width: 575px) {
-    #item-username{
+    #item-user{
         margin-left: 15px;
         margin-right: 15px;
     }
@@ -114,7 +133,7 @@
     }
 }
 @media screen and (max-width: 391px) {
-    #item-username-icon{
+    #item-user-icon{
         width: 25px;
     }
     .fa-sign-out-alt{
@@ -127,13 +146,13 @@
     }
 }
 @media screen and (max-width: 359px) {
-    #item-username{
+    #item-user{
         margin-left: 7px;
         margin-right: 7px;
     }
 }
 @media screen and (max-width: 343px) {
-    #item-username{
+    #item-user{
         margin-left: 5px;
         margin-right: 5px;
     }

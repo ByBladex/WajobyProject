@@ -125,7 +125,21 @@ export class UsuarioService {
   actualizarUltimaSesion(id: string){
     this.usuarioCollection.doc(id).update({ultimaSesion: Timestamp.now()}).then(() => console.log("Ultima sesion de usuario actualizada")).catch(err => console.log(err));    
   }
+
+  modificarDatos(datos: {}, idUsuario:string){
+    this.usuarioCollection.doc(idUsuario).update(datos);
+  }
   
+  async getImage(idUsuario:string){
+    const imagePath = `users_images/${idUsuario}/${idUsuario}_profile`;
+    const ref = this.storage.ref(imagePath);
+    return ref.getDownloadURL()
+  }
+
+  actualizarImageTrue(id:string){
+    this.usuarioCollection.doc(id).update({image: true}).then(() => console.log("Image: True")).catch(err => console.log(err));    
+  }
+
   actualizarCVTrue(id:string){
     this.usuarioCollection.doc(id).update({cv: true}).then(() => console.log("Cv: True")).catch(err => console.log(err));    
   }

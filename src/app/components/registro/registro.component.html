@@ -14,14 +14,25 @@
             <div class="col-md-6 mx-auto">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h1>Registro</h1>
+                        <h1>Registrarse</h1>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="registroForm" (submit)="registro()">
-                            <div class="form-group">
-                                <label for="username">Usuario</label>
-                                    <input type="text" class="form-control" formControlName="username" placeHolder="Example" #username ng-maxlength="16" [ngClass]="{'is-invalid': registroForm.controls.username.errors?.required && registroForm.controls.username.touched}">
-                                <div [hidden]="!this.registroForm.controls.username.errors?.required" class="invalid-feedback">Usuario requerido</div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="name">Nombre</label>
+                                            <input type="text" class="form-control" formControlName="name" placeHolder="Example: Carlos" #name ng-maxlength="16" [ngClass]="{'is-invalid': registroForm.controls.name.errors?.required && registroForm.controls.name.touched}">
+                                        <div [hidden]="!this.registroForm.controls.name.errors?.required" class="invalid-feedback">Nombre requerido</div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="surnames">Apellidos</label>
+                                            <input type="text" class="form-control" formControlName="surnames" placeHolder="Example: Ocelote" #surnames ng-maxlength="16" [ngClass]="{'is-invalid': registroForm.controls.surnames.errors?.required && registroForm.controls.surnames.touched}">
+                                        <div [hidden]="!this.registroForm.controls.surnames.errors?.required" class="invalid-feedback">Apellidos requeridos</div>
+                                    </div>             
+                                </div>
                             </div>
                             <div class="form-group mt-2">
                                 <label for="email">Email</label>
@@ -45,8 +56,8 @@
                                 <div [hidden]="!this.registroForm.controls.terms.errors?.required" class="invalid-feedback">Debe aceptar los Terminos de servicio</div>                     
                             </div>
                             <br>
-                            <input type="submit" [disabled]="this.registroForm.controls.username.invalid || this.registroForm.controls.email.invalid || this.registroForm.controls.password.invalid || this.registroForm.controls.pais.invalid || this.registroForm.controls.terms.invalid" value="Registro" class="btn btn-primary btn-block w-100">
-                            <div class="loginform-footer">¿Ya estás registrado? Inicia sesión <a routerLink="/login"><span class="loginform-footer-bold">aquí</span></a></div>
+                            <input type="submit" [disabled]="this.registroForm.controls.name.invalid || this.registroForm.controls.surnames.invalid || this.registroForm.controls.email.invalid || this.registroForm.controls.password.invalid || this.registroForm.controls.pais.invalid || this.registroForm.controls.terms.invalid" value="Registro" class="btn btn-wajoby btn-block w-100">
+                            <div class="loginform-footer mt-2">¿Ya estás registrado? Inicia sesión <a routerLink="/login"><span class="loginform-footer-bold">aquí</span></a></div>
                         </form>
                     </div>
                 </div>

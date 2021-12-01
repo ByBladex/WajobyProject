@@ -5,7 +5,7 @@
         <div class="d-flex order-sm-1 pr-2">
             <ul class="navbar-nav flex-row">
                 <li *ngIf="isLoggedIn" class="nav-item">
-                    <a routerLink="/perfil" class="nav-link" id="item-username"><img width="30px" id="item-username-icon" src="{{image}}"></a>
+                    <a routerLink="/perfil" class="nav-link" id="item-user"><img width="30px" id="item-user-icon" src="{{image | async}}"></a>
                 </li>
                 <li *ngIf="isLoggedIn" class="nav-item">
                     <a style="cursor: pointer;" (click)="logout()" class="nav-link" id="item-signOut"><i class="fas fa-sign-out-alt p-1"></i></a>

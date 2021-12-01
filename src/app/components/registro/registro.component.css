@@ -1,0 +1,12 @@
+.card{
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.171);
+}
+.btn-wajoby{
+    background-color: #13c1ac;
+    border-color: #13c1ac;
+    border-radius: 50px;
+    color: white;
+}
+a{
+    color: #13c1ac;
+}

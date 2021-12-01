@@ -50,7 +50,8 @@ export class RegistroComponent implements OnInit {
       }
     })
     this.registroForm = new FormGroup({
-      username: new FormControl ('', Validators.required),
+      name: new FormControl ('', Validators.required),
+      surnames: new FormControl ('', Validators.required),
       email: new FormControl ('', [Validators.required, Validators.email]),
       password: new FormControl ('', [Validators.required, Validators.minLength(6)]),
       pais: new FormControl ('', Validators.required),
@@ -67,7 +68,7 @@ export class RegistroComponent implements OnInit {
   }
 
   registro(){
-    if(this.registroForm.controls.pais.invalid || this.registroForm.controls.terms.invalid || this.registroForm.controls.password.invalid || this.registroForm.controls.email.invalid || this.registroForm.controls.username.invalid){
+    if(this.registroForm.controls.pais.invalid || this.registroForm.controls.terms.invalid || this.registroForm.controls.password.invalid || this.registroForm.controls.email.invalid || this.registroForm.controls.name.invalid || this.registroForm.controls.surnames.invalid){
         this.flashMessages.show('Debes rellenar completamente el formulario de registro', {
           cssClass: 'alert-danger', timeout: 4000
         });
@@ -81,10 +82,11 @@ export class RegistroComponent implements OnInit {
             this.usuario.email = auth.email;
             this.usuario.pais = this.registroForm.controls.pais.value;
             this.usuario.cv = false;
-            this.usuario.image = 'https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/users_images%2Favatar_default.jpg?alt=media&token=88f80322-e45b-4968-8e19-075a0ddaed6b';
+            this.usuario.image = false;
             this.usuario.fechaRegistro = Timestamp.now();
             this.usuario.ultimaSesion = Timestamp.now();
-            this.usuario.usuario = this.registroForm.controls.username.value;
+            this.usuario.nombre = this.registroForm.controls.name.value;
+            this.usuario.apellidos = this.registroForm.controls.surnames.value;
             this.usuarioService.registrarUsuarioDB(this.usuario);
           }
         }).remove

@@ -1,12 +1,12 @@
-import { Oferta } from './oferta';
 import { Timestamp } from "@firebase/firestore";
-import { AngularFireStorageReference } from '@angular/fire/compat/storage';
 
 export interface Usuario {
     id?:string;
-    usuario?:string;
+    nombre?:string;
+    apellidos?:string;
     email?:string;
-    image?:string;
+    telefono?:string;
+    image?:boolean;
     cv?:boolean;
     pais?:string;
     fechaRegistro?:Timestamp;
