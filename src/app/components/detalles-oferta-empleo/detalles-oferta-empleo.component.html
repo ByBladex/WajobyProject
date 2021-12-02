@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <a routerLink="/ofertas/{{ofertaSeleccionada?.categoria}}" class="btn btn-light w-100"><i class="fas fa-arrow-left p-1"></i>Regresar a categoría</a>
+                    <span><a routerLink="/">Inicio</a><i class="fas fa-angle-double-right p-1"></i><a routerLink="/ofertas/{{ofertaSeleccionada?.categoria}}">Categoria</a></span>
                 </div>
                 <div class="col-md-9 text-end" *ngIf="ofertaSeleccionada.usuarioOfertante===this.usuario.id">
                     <button (click)="modoVistaPrevia()" class="btn btn-primary btn-block" style="margin-right: 25px;" data-bs-toggle="modal" [attr.data-bs-target]="'#editarOfertaModal-'+ofertaSeleccionada.id">Editar oferta <i class="fas fa-edit"></i></button>
@@ -23,7 +23,8 @@
                         <h3>{{ofertaSeleccionada?.titulo | uppercase}}</h3>
                     </div>
                     <div class="col">
-                        <h3 class="text-end">{{ofertaSeleccionada?.salario}}€</h3>
+                        <h3 class="text-end" *ngIf="ofertaSeleccionada?.salario != null">{{ofertaSeleccionada?.salario}}€</h3>
+                        <h3 class="text-end" *ngIf="ofertaSeleccionada?.salario === null">Salario sin especificar</h3>
                     </div>
                 </div>
             </div>
@@ -39,13 +40,15 @@
         <div class="card-body">
             <p>{{ofertaSeleccionada?.descripcion}}</p>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer">
             <!--<div class="row">
                 <div class="col-md-2 p-0" *ngFor="let dia of ofertaSeleccionada.diasLaborales | keyvalue"><p class="small-letter"><strong>{{dia.key | slice:0:1 | uppercase}}-{{dia.value | slice:0:3}}</strong></p></div>
             </div>-->
             <div class="row">
-                <button (click)="solicitarEmpleo()" *ngIf="!solicitada && this.usuario && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-wajoby">Solicitar Empleo <i class="fas fa-clipboard"></i></button>
-                <button (click)="eliminarSolicitud(ofertaSolicitud)" *ngIf="solicitada && this.usuario && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-danger" style="border-radius: 100px;">Eliminar solicitud <i class="fas fa-clipboard"></i></button>
+                <a class="btn btn-wajoby" *ngIf="!this.usuario.id" data-bs-toggle="modal" data-bs-target="#solicitarOferta">Solicitar Empleo <i class="fas fa-clipboard"></i></a>
+                <p *ngIf="this.usuario.cv === false && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" style="color: red; text-align: center;">Para solicitar un empleo necesitas subir tu curriculum antes</p>
+                <button (click)="solicitarEmpleo()" *ngIf="!solicitada && this.usuario.id && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-wajoby">Solicitar Empleo <i class="fas fa-clipboard"></i></button>
+                <button (click)="eliminarSolicitud(ofertaSolicitud)" *ngIf="solicitada && this.usuario.id && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-danger" style="border-radius: 100px;">Eliminar solicitud <i class="fas fa-clipboard"></i></button>
             </div>
         </div>
     </div>
@@ -56,8 +59,32 @@
 <div class="container mt-5" *ngIf="ofertaSeleccionada?.usuarioOfertante===this.usuario.id && this.solicitudesOferta.length>0">
     <button class="btn btn-secondary" (click)="mostrarOcultar()">Mostrar solicitudes de empleo</button>
     <ul class="list-group mt-3" [hidden]="ocultado">
-        <li class="list-group-item" *ngFor="let usuario of listadoUsuariosSolicitudes">{{usuario.id}}</li>
+        <li class="list-group-item" *ngFor="let usuario of listadoUsuariosSolicitudes">Id: '{{usuario.id}}' Nombre: '{{usuario.nombre}}' Apellidos: '{{usuario.apellidos}}' Email: '{{usuario.email}}'</li>
     </ul>
 </div>
 <app-modal-editar-oferta [oferta]="ofertaSeleccionada"></app-modal-editar-oferta>
 
+
+<!--Agregar Oferta modal-->
+<div class="modal fade" id="solicitarOferta">
+    <div class="modal-dialog modal-lg" style="margin-top: 100px; max-width: 500px;">
+        <div class="modal-content">
+            <div class="modal-header bg-light text-black">
+                <h5 class="modal-title">Sesión requerida</h5>
+                <button class="close btn" data-bs-dismiss="modal" #botonCerrar>
+                    <span>&times;</span>
+                </button>
+            </div>
+            <form #ofertaForm="ngForm">
+                <div class="modal-body text-center mt-3">
+                    <h3>Para solicitar el empleo es necesario:</h3>
+                    <p>Si ya tienes una cuenta</p>
+                    <a routerLink="/login" data-bs-dismiss="modal" class="btn btn-danger mb-2 w-100" style="color: white;">Iniciar sesión</a><br>
+                    <hr><span class="specialModal">O</span><hr>
+                    <p>Si aun no cuentas con una</p>
+                    <a routerLink="/registro" data-bs-dismiss="modal" class="btn btn-primary mb-2 w-100" style="color: white;">Registrate</a><br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

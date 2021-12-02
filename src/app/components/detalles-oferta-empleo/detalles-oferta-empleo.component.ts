@@ -7,7 +7,7 @@ import { UsuarioService } from './../../services/usuario.service';
 import { LoginService } from './../../services/login.service';
 import { OfertasService } from './../../services/ofertas.service';
 import { Oferta } from './../../models/oferta';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentData } from '@angular/fire/compat/firestore';
 
@@ -29,7 +29,7 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
   listadoUsuariosSolicitudes:Usuario[] = [];
   ocultado:boolean = true;
   solicitada: boolean = false;
-
+  
   constructor(private router: Router,private route: ActivatedRoute, private ofertasService: OfertasService, private loginService: LoginService, private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
@@ -99,10 +99,11 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
         this.usuarioService.solicitarOferta(this.ofertaSolicitud, this.usuario.id);
       }
       else
-        console.log('Para solicitar empleo debes subir antes tu cv a tu perfil');  
+        console.log('Para solicitar empleo debes subir antes tu cv a tu perfil');
     }
-    else
-      console.log('necesitas loguearte para solicitar empleo');
+    else{
+      console.log('Necesitas iniciar sesión');
+    }
   }
 
   eliminarSolicitud(oferta:OfertaSolicitud){

@@ -1,0 +1,11 @@
+a{
+    text-decoration:none;
+    color: white;
+}
+a:hover{
+    color: #13c1ac;
+}
+ul{
+    list-style: none;
+    padding: 0%;
+}

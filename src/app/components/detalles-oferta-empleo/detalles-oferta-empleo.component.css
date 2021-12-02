@@ -2,5 +2,38 @@
     background-color: #13c1ac;
     border-color: #13c1ac;
     border-radius: 50px;
-    color: white;
+    color: white !important;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: #13c1ac;
+}
+hr{
+    width: 46%;
+    display: inline-block;
+}
+.specialModal{
+    vertical-align: top;
+    line-height: 30px;
+    margin: 10px;
+}
+
+@media screen and (max-width: 457px){
+    hr{
+        width: 45% !important;
+    }
+}
+
+@media screen and (max-width: 375px){
+    hr{
+        width: 44% !important;
+    }
+}
+@media screen and (max-width: 321px){
+    hr{
+        width: 43% !important;
+    }
 }
