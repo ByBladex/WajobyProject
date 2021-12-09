@@ -24,7 +24,7 @@
                                 <label for="imgProfile" *ngIf="image">
                                     <div class="overlay">
                                         <i id="hidden_icon" width="100px" class="fas fa-upload"></i>
-                                        <img width="100px" src="{{image |async}}" class="imagen-perfil">
+                                        <img width="100px" src="{{image | async}}" class="imagen-perfil">
                                     </div>
                                 </label>
                                 <div class="row justify-content-center">
@@ -59,7 +59,7 @@
                                     <label>Pais</label>
                                     <div>
                                         <select name="pais" class="form-select form-select-md">
-                                            <option *ngFor="let pais of paises" class="form-control" #pais [value]="pais.nombre" [selected]="usuarioActivo.pais === pais.nombre">{{pais.nombre}}</option>
+                                            <option *ngFor="let pais of paises" class="form-control" #pais [value]="pais?.nombre" [selected]="usuarioActivo?.pais === pais?.nombre">{{pais?.nombre}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
     </div>
 </section>
 <section id="cv" class="py-4 mb-4 mt-4">
-    <app-carga-curriculum *ngIf="usuarioActivo" [usuarioActivo]="usuarioActivo"></app-carga-curriculum>
+    <app-carga-curriculum *ngIf="usuarioActivo?.id" [usuarioActivo]="usuarioActivo"></app-carga-curriculum>
 </section>
 <!--Me gustaría hacer un pequeño menú para dividir las ofertas de empleo creadas y las solicitudes de empleo enviadas-->
 <section id="header-perfil-ofertas" class="py-4 mb-4 mt-4 bg-light">

@@ -1,3 +1,4 @@
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { LoginService } from './../../services/login.service';
 import { UsuarioService } from './../../services/usuario.service';
@@ -19,12 +20,10 @@ export class ItemOfertaPerfilComponent implements OnInit {
     categoria:'',
     titulo:'',
     descripcion:'',
-    diasLaborales:{},
-    imagen:'',
     salario:'',
     pais:'',
     provincia:'',
-    municipio:'',
+    localidad:'',
   };
   
   @ViewChild("ofertaForm") ofertaForm:NgForm;
@@ -34,7 +33,7 @@ export class ItemOfertaPerfilComponent implements OnInit {
   idOfertaAntigua: string;
   categoriaOfertaAntigua: string;
 
-  constructor(private ofertasService: OfertasService, private usuarioService: UsuarioService, private loginService: LoginService) { }
+  constructor(private ofertasService: OfertasService, private usuarioService: UsuarioService, private loginService: LoginService, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.oferta = this.ofertaSeleccionada;
@@ -45,6 +44,10 @@ export class ItemOfertaPerfilComponent implements OnInit {
       if(auth){
         this.ofertasService.eliminarOferta(oferta);
         this.usuarioService.eliminarOferta(oferta, auth.uid);
+        if(oferta.imagen){
+          const filePath = `jobs_images/${oferta.id}/${oferta.id}_job`;
+          this.storage.ref(filePath).delete();
+        }
       }
     })
   }

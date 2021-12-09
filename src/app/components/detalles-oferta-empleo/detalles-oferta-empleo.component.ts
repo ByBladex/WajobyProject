@@ -1,3 +1,5 @@
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Observable, of } from 'rxjs';
 import { OfertaSolicitud } from './../../models/ofertaSolicitud';
 import { Timestamp } from '@firebase/firestore';
 import { UsuarioSolicitud } from './../../models/usuarioSolicitud';
@@ -20,17 +22,21 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
 
   categoria:string;
   id:string;
-  ofertaSeleccionada:Oferta;
+  ofertaSeleccionada:Oferta={};
   usuario:Usuario = {};
-  usuarioSolicitud: UsuarioSolicitud = {};
-  ofertaSolicitud: OfertaSolicitud = {};
+  usuarioSolicitud:UsuarioSolicitud = {};
+  ofertaSolicitud:OfertaSolicitud = {};
   vistaPrevia:boolean = false;
   solicitudesOferta:DocumentData[] = [];
   listadoUsuariosSolicitudes:Usuario[] = [];
   ocultado:boolean = true;
   solicitada: boolean = false;
-  
-  constructor(private router: Router,private route: ActivatedRoute, private ofertasService: OfertasService, private loginService: LoginService, private usuarioService: UsuarioService) { }
+  usuarioOfertante:Usuario = {};
+  imageUsuarioOfertante:Observable<string>;
+  imagenOferta:Observable<string>;
+
+  constructor(private router: Router,private route: ActivatedRoute, private ofertasService: OfertasService, 
+    private loginService: LoginService, private usuarioService: UsuarioService, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.listadoUsuariosSolicitudes = [];
@@ -41,6 +47,17 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
         this.ofertaSeleccionada = oferta;
         this.ofertaSolicitud.id = oferta.id;
         this.ofertaSolicitud.categoria = oferta.categoria;
+        if(this.ofertaSeleccionada.imagen){
+          this.ofertasService.getImage(oferta.id).then(image => {
+            if(image){
+              image.subscribe(img => {
+                this.imagenOferta = img;
+              })
+            }
+          }) 
+        }
+
+        console.log(this.ofertaSeleccionada)
         this.ofertasService.getSolicitudesOferta(this.ofertaSeleccionada.id, this.ofertaSeleccionada.categoria).subscribe(solicitudes => {
           this.solicitudesOferta = solicitudes;
           this.solicitudesOferta.map(solicitudUsuario =>{
@@ -49,6 +66,14 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
             })
           })
         });
+        this.usuarioService.getUsuario(this.ofertaSeleccionada.usuarioOfertante).subscribe(user => {
+          if(user){
+            this.usuarioOfertante = user;
+            this.usuarioService.getImage(this.usuarioOfertante.id).then(image => {
+              this.imageUsuarioOfertante = image;
+            })
+          }
+        })
       }
     })
     this.loginService.getAuth().subscribe(auth => {
@@ -72,6 +97,10 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
       if(auth){
         this.ofertasService.eliminarOferta(oferta);
         this.usuarioService.eliminarOferta(oferta, auth.uid);
+        if(oferta.imagen){
+          const filePath = `jobs_images/${oferta.id}/${oferta.id}_job`;
+          this.storage.ref(filePath).delete();
+        }
         this.router.navigate(['/ofertas/'+this.ofertaSeleccionada.categoria]);
       }
     })

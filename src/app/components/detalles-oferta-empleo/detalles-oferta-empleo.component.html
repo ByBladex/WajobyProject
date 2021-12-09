@@ -35,15 +35,27 @@
 
 
         <div class="card-body text-center">
-            <img class="img-fluid" src="{{ofertaSeleccionada?.imagen}}">
+            <img class="img-fluid" *ngIf="ofertaSeleccionada?.imagen" src="{{imagenOferta}}" title="{{ofertaSeleccionada?.titulo}}" alt="{{ofertaSeleccionada?.titulo}} - Wajoby">
+            <img class="img-fluid" *ngIf="!ofertaSeleccionada?.imagen" src="https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/assets%2Fjob_default.png?alt=media&token=a22422c8-9be8-4691-b5b2-b253f0c02e4f">
         </div>
         <div class="card-body">
-            <p>{{ofertaSeleccionada?.descripcion}}</p>
+            <div class="mensaje bg-light">
+                <div class="usuarioOfertante mb-2">
+                    <img width="25px" src="{{imageUsuarioOfertante |async}}" class="imagen-perfil" style="margin-right: 5px;"><span>{{usuarioOfertante.nombre}} {{usuarioOfertante.apellidos}}</span>
+                </div>
+                <p>{{ofertaSeleccionada?.descripcion}}</p>
+            </div>
+            <hr style="width: 100% !important;">
+            <div class="location" style="font-size: 12px;">
+                <span>{{ofertaSeleccionada?.provincia}}</span>
+                <p>{{ofertaSeleccionada?.localidad}}</p>
+            </div>
+            <!--<label>Dias laborales:</label>
+            <ul>
+                <li *ngFor="let dia of ofertaSeleccionada?.diasLaborales | keyvalue"><p class="small-letter"><strong>{{dia.value}}</strong></p></li>
+            </ul>-->
         </div>
         <div class="card-footer">
-            <!--<div class="row">
-                <div class="col-md-2 p-0" *ngFor="let dia of ofertaSeleccionada.diasLaborales | keyvalue"><p class="small-letter"><strong>{{dia.key | slice:0:1 | uppercase}}-{{dia.value | slice:0:3}}</strong></p></div>
-            </div>-->
             <div class="row">
                 <a class="btn btn-wajoby" *ngIf="!this.usuario.id" data-bs-toggle="modal" data-bs-target="#solicitarOferta">Solicitar Empleo <i class="fas fa-clipboard"></i></a>
                 <p *ngIf="this.usuario.cv === false && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" style="color: red; text-align: center;">Para solicitar un empleo necesitas subir tu curriculum antes</p>
@@ -62,7 +74,7 @@
         <li class="list-group-item" *ngFor="let usuario of listadoUsuariosSolicitudes">Id: '{{usuario.id}}' Nombre: '{{usuario.nombre}}' Apellidos: '{{usuario.apellidos}}' Email: '{{usuario.email}}'</li>
     </ul>
 </div>
-<app-modal-editar-oferta [oferta]="ofertaSeleccionada"></app-modal-editar-oferta>
+<app-modal-editar-oferta *ngIf="ofertaSeleccionada?.id" [oferta]="ofertaSeleccionada" [imagen]="ofertaSeleccionada?.imagen"></app-modal-editar-oferta>
 
 
 <!--Agregar Oferta modal-->

@@ -1,6 +1,6 @@
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { OfertaSolicitud } from './../models/ofertaSolicitud';
 import { UsuarioSolicitud } from './../models/usuarioSolicitud';
-import { Usuario } from './../models/usuario';
 import { Oferta } from './../models/oferta';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
@@ -15,7 +15,7 @@ export class OfertasService {
     ofertasDoc: AngularFirestoreDocument<Oferta>;
     oferta: Observable<Oferta>;
 
-    constructor(private db: AngularFirestore) {
+    constructor(private db: AngularFirestore, private storage: AngularFireStorage) {
         this.ofertasCollection = this.db.collection('empleos');
     }
     
@@ -61,6 +61,16 @@ export class OfertasService {
              });
           )
         */
+    }
+
+    async getImage(idOferta:string){
+      const imagePath = `jobs_images/${idOferta}/${idOferta}_job`;
+      const ref = this.storage.ref(imagePath);
+      return ref.getDownloadURL();
+    }
+
+    actualizarImageTrue(id:string){
+      this.ofertasCollection.doc(id).update({imagen: true}).then(() => console.log("Imagen: True")).catch(err => console.log(err));    
     }
 
     registrarSolicitud(oferta:Oferta, usuario:UsuarioSolicitud){

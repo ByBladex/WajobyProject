@@ -1,14 +1,12 @@
-
 export interface Oferta {
     id?:string;
     usuarioOfertante?:string;
     categoria?:string;
     titulo?:string;
     descripcion?:string;
-    diasLaborales?:{};
-    imagen?:string;
+    imagen?:boolean;
     salario?:string;
     pais?:string;
     provincia?:string;
-    municipio?:string;
+    localidad?:string;
 }

@@ -33,6 +33,19 @@
     display: block;
 }
 
+#hidden_icon-job{
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 0px;
+    padding: 42%;
+    background-color: rgba(0, 0, 0, 0.486);
+    color: white;
+}
+
+.overlay:hover #hidden_icon-job{
+    display: block;
+}
 .small-letter{
     font-size: 10px;
 }

@@ -15,23 +15,50 @@
                 <div class="modal-body text-start">
                     <h3 class="text-center">Puedes revisar los cambios en el modo vista previa <a class="btn btn-primary" data-bs-dismiss="modal" #botonCerrar>Ver vista previa</a></h3>
                     <div class="form-group">
+                        <div class="photoJob text-center">
+                            <label for="imgJob">
+                                <div class="overlay">
+                                    <i id="hidden_icon-job" width="100px" class="fas fa-upload"></i>
+                                    <div class="fill"  style="width:100px; height:100px">
+                                        <img *ngIf="!oferta.imagen" width="100px" src="https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/assets%2Fjob_default.png?alt=media&token=a22422c8-9be8-4691-b5b2-b253f0c02e4f">
+                                        <img *ngIf="oferta.imagen" width="100px" src="{{imagen}}">
+                                    </div>
+                                </div>
+                            </label>
+                            <div class="row justify-content-center">
+                                <div class="progress mt-2 col-md-2" [hidden]="!(uploadPercent | async)">
+                                    <div class="progress-bar progress-bar-striped bg-wajoby" role="progressbar" [style.width]="(uploadPercent | async) + '%'"><span *ngIf="(uploadPercent | async)>0">{{uploadPercent | async}}%</span></div>
+                                </div>
+                            </div>
+                            <input class="form-control" type="file" id="imgJob" accept=".jpg,.jpeg,.png" (change)="imagenSeleccionada($event)"  style="display: none;">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="titulo">Titulo</label>
-                        <input type="text" name="titulo" class="form-control" #titulo="ngModel" [(ngModel)]="oferta.titulo" [ngClass]="{'is-invalid': titulo.errors && titulo.touched}" required minlength="2">
-                        <div [hidden]="!titulo.errors?.required" class="invalid-feedback">Titulo requerido</div>
-                        <div [hidden]="!titulo.errors?.minlength" class="invalid-feedback">Debe contener al menos 2 caracteres</div>
+                        <input type="text" name="titulo" class="form-control" #titulo="ngModel" [(ngModel)]="oferta.titulo" [ngClass]="{'is-invalid': titulo.errors && titulo.touched}" required>
+                        <div [hidden]="!titulo.errors?.required" class="invalid-feedback">Título requerido</div>
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripcion</label>
-                        <input type="text" name="descripcion" class="form-control" #descripcion="ngModel" [(ngModel)]="oferta.descripcion" [ngClass]="{'is-invalid': descripcion.errors && descripcion.touched}" required minlength="2">
-                        <div [hidden]="!descripcion.errors?.required" class="invalid-feedback">Descripcion requerida</div>
-                        <div [hidden]="!descripcion.errors?.minlength" class="invalid-feedback">Debe contener al menos 2 caracteres</div>
+                        <input type="text" name="descripcion" class="form-control" #descripcion="ngModel" [(ngModel)]="oferta.descripcion" [ngClass]="{'is-invalid': descripcion.errors && descripcion.touched}" required>
+                        <div [hidden]="!descripcion.errors?.required" class="invalid-feedback">Descripción requerida</div>
                     </div>
                     <div class="form-group mt-3">
                         <label for="categoria">Categoria</label>
-                        <select name="categoria" class="form-select form-select-lg" #categoria="ngModel" [(ngModel)]="oferta.categoria" required [ngClass]="{'is-invalid': categoria.errors && categoria.touched}">
+                        <select name="categoria" class="form-select form-select-lg" #categoria="ngModel" [(ngModel)]="oferta.categoria" [ngClass]="{'is-invalid': categoria.errors && categoria.touched}" required>
                             <option *ngFor="let categoria of categorias" class="form-control" #pais [value]="categoria">{{categoria | uppercase}}</option>
                         </select>
-                        <div [hidden]="!categoria.errors?.required" class="invalid-feedback">Debe seleccionar un país</div>                     
+                        <div [hidden]="!categoria.errors?.required" class="invalid-feedback">Debe seleccionar una categoría</div>                     
+                    </div>
+                    <div class="form-group">
+                        <label for="provincia">Provincia</label>
+                        <input type="text" name="provincia" class="form-control" #provincia="ngModel" [(ngModel)]="oferta.provincia" [ngClass]="{'is-invalid': provincia.errors && provincia.touched}" required>
+                        <div [hidden]="!provincia.errors?.required" class="invalid-feedback">Provincia requerida</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="localidad">Localidad</label>
+                        <input type="text" name="localidad" class="form-control" #localidad="ngModel" [(ngModel)]="oferta.localidad" [ngClass]="{'is-invalid': localidad.errors && localidad.touched}" required>
+                        <div [hidden]="!localidad.errors?.required" class="invalid-feedback">Localidad requerida</div>
                     </div>
                     <div class="form-group">
                         <label for="salario">Salario</label>
