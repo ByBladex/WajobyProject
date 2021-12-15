@@ -8,3 +8,16 @@
 .bg-wajoby{
     background-color: #13c1ac;
 }
+
+.fill {
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.fill img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}

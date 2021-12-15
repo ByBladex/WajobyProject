@@ -15,3 +15,13 @@ a{
 .card:hover{
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.171);
 }
+@media screen and (max-width: 767px){
+    .cajaFlex{
+        display: block !important;
+    }
+    .infoPortada{
+        width: 100%;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+}

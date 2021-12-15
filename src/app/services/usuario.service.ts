@@ -75,6 +75,12 @@ export class UsuarioService {
     console.log("Solicitud ",oferta.id," eliminada en el usuario: ",id);
   }
 
+  editarSolicitud(idOferta:string, id:string, nuevaCategoria:string, nuevoTitulo:string){
+    this.db.doc<Oferta>(`usuarios/${id}/solicitudes/${idOferta}`).update({categoria: nuevaCategoria});
+    this.db.doc<Oferta>(`usuarios/${id}/solicitudes/${idOferta}`).update({titulo: nuevoTitulo});
+    console.log("Solicitud ",idOferta," editada en el usuario: ",id);
+  }
+
   async getCV(idUsuario:string){
     const filePath = `users_cv/${idUsuario}/${idUsuario}_cv.pdf`;
     const ref = this.storage.ref(filePath);
@@ -127,7 +133,8 @@ export class UsuarioService {
   }
 
   modificarDatos(datos: {}, idUsuario:string){
-    this.usuarioCollection.doc(idUsuario).update(datos);
+    this.usuarioCollection.doc(idUsuario).update(datos).then(() => {console.log(datos), window.location.reload()});
+    
   }
   
   async getImage(idUsuario:string){

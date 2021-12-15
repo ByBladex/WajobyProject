@@ -4,6 +4,12 @@
     border-radius: 50px;
     color: white !important;
 }
+#verSolicitudes{
+    color: white;
+}
+#verSolicitudes:hover{
+    color: #13c1ac;
+}
 a{
     text-decoration: none;
     color: black;

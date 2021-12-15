@@ -20,8 +20,8 @@
                                 <div class="overlay">
                                     <i id="hidden_icon-job" width="100px" class="fas fa-upload"></i>
                                     <div class="fill"  style="width:100px; height:100px">
-                                        <img *ngIf="!oferta.imagen" width="100px" src="https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/assets%2Fjob_default.png?alt=media&token=a22422c8-9be8-4691-b5b2-b253f0c02e4f">
-                                        <img *ngIf="oferta.imagen" width="100px" src="{{imagen}}">
+                                        <img *ngIf="!oferta?.imagen" width="100px" src="https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/assets%2Fjob_default.png?alt=media&token=a22422c8-9be8-4691-b5b2-b253f0c02e4f">
+                                        <img *ngIf="oferta?.imagen" width="100px" src="{{imagen}}">
                                     </div>
                                 </div>
                             </label>

@@ -34,34 +34,34 @@
                     </div>
                     <div class="form-group">
                         <label for="titulo">Titulo</label>
-                        <input type="text" name="titulo" class="form-control" #titulo="ngModel" [(ngModel)]="oferta.titulo" [ngClass]="{'is-invalid': titulo.errors && titulo.touched}" required>
+                        <input type="text" name="titulo" class="form-control" #titulo="ngModel" [(ngModel)]="oferta.titulo" [ngClass]="{'is-invalid': titulo.errors && titulo.untouched}" required>
                         <div [hidden]="!titulo.errors?.required" class="invalid-feedback">Título requerido</div>
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripcion</label>
-                        <input type="text" name="descripcion" class="form-control" #descripcion="ngModel" [(ngModel)]="oferta.descripcion" [ngClass]="{'is-invalid': descripcion.errors && descripcion.touched}" required>
+                        <input type="text" name="descripcion" class="form-control" #descripcion="ngModel" [(ngModel)]="oferta.descripcion" [ngClass]="{'is-invalid': descripcion.errors && descripcion.untouched}" required>
                         <div [hidden]="!descripcion.errors?.required" class="invalid-feedback">Descripción requerida</div>
                     </div>
                     <div class="form-group mt-3">
                         <label for="categoria">Categoria</label>
-                        <select name="categoria" class="form-select form-select-lg" #categoria="ngModel" [(ngModel)]="oferta.categoria" [ngClass]="{'is-invalid': categoria.errors && categoria.touched}" required>
+                        <select name="categoria" class="form-select form-select-lg" #categoria="ngModel" [(ngModel)]="oferta.categoria" [ngClass]="{'is-invalid': categoria.errors && categoria.untouched}" required>
                             <option *ngFor="let categoria of categorias" class="form-control" #pais [value]="categoria">{{categoria | uppercase}}</option>
                         </select>
                         <div [hidden]="!categoria.errors?.required" class="invalid-feedback">Debe seleccionar una categoría</div>
                     </div>
                     <div class="form-group">
                         <label for="provincia">Provincia</label>
-                        <input type="text" name="provincia" class="form-control" #provincia="ngModel" [(ngModel)]="oferta.provincia" [ngClass]="{'is-invalid': provincia.errors && provincia.touched}" required>
+                        <input type="text" name="provincia" class="form-control" #provincia="ngModel" [(ngModel)]="oferta.provincia" [ngClass]="{'is-invalid': provincia.errors && provincia.untouched}" required>
                         <div [hidden]="!provincia.errors?.required" class="invalid-feedback">Provincia requerida</div>
                     </div>
                     <div class="form-group">
                         <label for="localidad">Localidad</label>
-                        <input type="text" name="localidad" class="form-control" #localidad="ngModel" [(ngModel)]="oferta.localidad" [ngClass]="{'is-invalid': localidad.errors && localidad.touched}" required>
+                        <input type="text" name="localidad" class="form-control" #localidad="ngModel" [(ngModel)]="oferta.localidad" [ngClass]="{'is-invalid': localidad.errors && localidad.untouched && localidad.untouched}" required>
                         <div [hidden]="!localidad.errors?.required" class="invalid-feedback">Localidad requerida</div>
                     </div>
                     <div class="form-group">
                         <label for="salario">Salario</label>
-                        <input type="number" name="salario" class="form-control" #salario="ngModel" [(ngModel)]="oferta.salario" [ngClass]="{'is-invalid': salario.errors && salario.touched}">
+                        <input type="number" name="salario" class="form-control" #salario="ngModel" [(ngModel)]="oferta.salario" [ngClass]="{'is-invalid': salario.errors}">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Crear</button>

@@ -10,14 +10,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ItemSolicitudPerfilComponent implements OnInit {
 
-  solicitud: OfertaSolicitud;
-
   @Input('solicitud') solicitudSeleccionada:OfertaSolicitud;
 
   constructor(private usuarioService: UsuarioService, private loginService:LoginService) { }
 
   ngOnInit(): void {
-    this.solicitud = this.solicitudSeleccionada;
   }
 
   eliminarSolicitud(solicitud: OfertaSolicitud){

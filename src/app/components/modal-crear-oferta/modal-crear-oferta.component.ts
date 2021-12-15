@@ -36,7 +36,7 @@ export class ModalCrearOfertaComponent implements OnInit {
   @ViewChild("ofertaForm") ofertaForm:NgForm;
   @ViewChild("botonCerrar") botonCerrar:ElementRef;
 
-  categorias=['infantil','fitness','mecanica','construccion','hosteleria','educacion','informatica','comercio','transporte','cuidados'];
+  categorias=['infantil','mecanica','construccion','hosteleria','educacion','informatica','comercio','transporte','cuidados'];
   
 
   constructor(private ofertasService: OfertasService, private flashMessages: FlashMessagesService, 
@@ -98,5 +98,7 @@ export class ModalCrearOfertaComponent implements OnInit {
       oferta.imagen = true;
       console.log('imagen subida');
     }
+    else
+      oferta.imagen = false;
   }
 }

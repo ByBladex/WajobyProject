@@ -4,27 +4,26 @@
             <div class="col-md-3">
                 <a routerLink="/" class="btn btn-light w-100"><i class="fas fa-arrow-left p-1"></i>Regresar al inicio</a>
             </div>
-            <div class="col-md-3">
-                <button type="submit" (click)="cargarImagenPerfil()" class="btn btn-success w-100"><i class="fas fa-check p-1"></i>Guardar Cambios</button>
-            </div>
         </div>
     </div>
 </section>
 <section id="datos">
     <div class="container text-center">
         <div class="col-md-10 m-auto">
-            <div class="card">
+            <div class="card border-light" style="box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.171);">
                 <div class="card-header">
                     <h4>Datos</h4>
                 </div>                            
                 <div class="card-body">
-                    <fieldset class="form-group">
+                    <form [formGroup]="datosUsuario" (submit)="guardarDatos()">
                         <div class="row">
                             <div class="col">
                                 <label for="imgProfile" *ngIf="image">
                                     <div class="overlay">
                                         <i id="hidden_icon" width="100px" class="fas fa-upload"></i>
-                                        <img width="100px" src="{{image | async}}" class="imagen-perfil">
+                                        <div class="fill"  style="width:100px; height:100px">
+                                            <img width="100px" src="{{image | async}}" class="imagen-perfil">
+                                        </div>
                                     </div>
                                 </label>
                                 <div class="row justify-content-center">
@@ -40,7 +39,8 @@
                                 <div class="form-group">
                                     <label>Nombre</label>
                                     <div>
-                                        <input type="text" class="form-control" value="{{usuarioActivo?.nombre}}">
+                                        <input type="text" class="form-control" formControlName="name" value="{{usuarioActivo?.nombre}}" placeHolder="Example: Miguel" #name ng-maxlength="16" [ngClass]="{'is-invalid': datosUsuario.controls.name.errors?.required && datosUsuario.controls.name.touched}">
+                                        <div [hidden]="!this.datosUsuario.controls.name.errors?.required" class="invalid-feedback">Nombre requerido</div>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +48,8 @@
                                 <div class="form-group">
                                     <label>Apellidos</label>
                                     <div>
-                                        <input type="text" class="form-control" value="{{usuarioActivo?.apellidos}}">
+                                        <input type="text" class="form-control" formControlName="surnames" value="{{usuarioActivo?.apellidos}}" placeHolder="Example: Hernández" #surnames ng-maxlength="16" [ngClass]="{'is-invalid': datosUsuario.controls.surnames.errors?.required && datosUsuario.controls.surnames.touched}">
+                                        <div [hidden]="!this.datosUsuario.controls.surnames.errors?.required" class="invalid-feedback">Apellidos requeridos</div>
                                     </div>
                                 </div>
                             </div>
@@ -58,9 +59,10 @@
                                 <div class="form-group">
                                     <label>Pais</label>
                                     <div>
-                                        <select name="pais" class="form-select form-select-md">
+                                        <select name="pais" formControlName="pais" class="form-select form-select-md" required [ngClass]="{'is-invalid': datosUsuario.controls.pais.errors?.required && datosUsuario.controls.pais.touched}">
                                             <option *ngFor="let pais of paises" class="form-control" #pais [value]="pais?.nombre" [selected]="usuarioActivo?.pais === pais?.nombre">{{pais?.nombre}}</option>
                                         </select>
+                                        <div [hidden]="!this.datosUsuario.controls.pais.errors?.required" class="invalid-feedback">Debe seleccionar un país</div>                     
                                     </div>
                                 </div>
                             </div>                        
@@ -68,12 +70,19 @@
                                 <div class="form-group">
                                     <label>Teléfono</label>
                                     <div>
-                                        <input type="text" class="form-control" value="{{usuarioActivo?.telefono}}">
+                                        <input type="text" class="form-control" formControlName="telefono" value="{{usuarioActivo?.telefono}}" pattern="[0-9]+" placeHolder="Example: 123456789" #telefono ng-minlength="9" maxlength="9" [ngClass]="{'is-invalid': datosUsuario.controls.telefono.errors?.required && datosUsuario.controls.telefono.touched || datosUsuario.controls.telefono.errors?.minlength}">
+                                        <div [hidden]="this.datosUsuario.controls.telefono.errors?.required && this.datosUsuario.controls.telefono.errors?.minlength" class="invalid-feedback">Debe contener 9 dígitos</div>
+                                        <div [hidden]="!this.datosUsuario.controls.telefono.errors?.pattern" class="invalid-feedback">Solo se admiten números</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
+                        <div class="row text-center mt-3">
+                            <div class="col-md-12">
+                                <input type="submit" [disabled]="!this.imagen && (this.datosUsuario.controls.name.invalid || this.datosUsuario.controls.surnames.invalid || this.datosUsuario.controls.pais.invalid || this.datosUsuario.controls.telefono.invalid)" value="Guardar cambios" class="btn btn-success">
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -82,7 +91,6 @@
 <section id="cv" class="py-4 mb-4 mt-4">
     <app-carga-curriculum *ngIf="usuarioActivo?.id" [usuarioActivo]="usuarioActivo"></app-carga-curriculum>
 </section>
-<!--Me gustaría hacer un pequeño menú para dividir las ofertas de empleo creadas y las solicitudes de empleo enviadas-->
 <section id="header-perfil-ofertas" class="py-4 mb-4 mt-4 bg-light">
     <div class="container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">

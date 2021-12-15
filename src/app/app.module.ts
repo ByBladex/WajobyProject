@@ -32,6 +32,7 @@ import { ModalEditarOfertaComponent } from './components/modal-editar-oferta/mod
 import { CargaCurriculumComponent } from './components/carga-curriculum/carga-curriculum.component';
 import { ListaSolicitudesPerfilComponent } from './components/lista-solicitudes-perfil/lista-solicitudes-perfil.component';
 import { ItemSolicitudPerfilComponent } from './components/item-solicitud-perfil/item-solicitud-perfil.component';
+import { SolicitudesOfertaModalComponent } from './components/solicitudes-oferta-modal/solicitudes-oferta-modal.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ItemSolicitudPerfilComponent } from './components/item-solicitud-perfil
     ModalEditarOfertaComponent,
     CargaCurriculumComponent,
     ListaSolicitudesPerfilComponent,
-    ItemSolicitudPerfilComponent
+    ItemSolicitudPerfilComponent,
+    SolicitudesOfertaModalComponent
   ],
   imports: [
     BrowserModule,

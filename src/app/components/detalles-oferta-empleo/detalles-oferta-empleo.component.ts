@@ -27,9 +27,6 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
   usuarioSolicitud:UsuarioSolicitud = {};
   ofertaSolicitud:OfertaSolicitud = {};
   vistaPrevia:boolean = false;
-  solicitudesOferta:DocumentData[] = [];
-  listadoUsuariosSolicitudes:Usuario[] = [];
-  ocultado:boolean = true;
   solicitada: boolean = false;
   usuarioOfertante:Usuario = {};
   imageUsuarioOfertante:Observable<string>;
@@ -39,7 +36,6 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
     private loginService: LoginService, private usuarioService: UsuarioService, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
-    this.listadoUsuariosSolicitudes = [];
     this.categoria = this.route.snapshot.params['categoria'];
     this.id = this.route.snapshot.params['id'];
     this.ofertasService.getOferta(this.categoria,this.id).subscribe(oferta => {
@@ -47,31 +43,30 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
         this.ofertaSeleccionada = oferta;
         this.ofertaSolicitud.id = oferta.id;
         this.ofertaSolicitud.categoria = oferta.categoria;
+        this.ofertaSolicitud.titulo = oferta.titulo;
         if(this.ofertaSeleccionada.imagen){
-          this.ofertasService.getImage(oferta.id).then(image => {
+          this.ofertasService.getImage(oferta.id).then(async image => {
             if(image){
-              image.subscribe(img => {
-                this.imagenOferta = img;
+              image.subscribe(async img => {
+                this.imagenOferta = await img;
               })
             }
           }) 
         }
 
         console.log(this.ofertaSeleccionada)
-        this.ofertasService.getSolicitudesOferta(this.ofertaSeleccionada.id, this.ofertaSeleccionada.categoria).subscribe(solicitudes => {
-          this.solicitudesOferta = solicitudes;
-          this.solicitudesOferta.map(solicitudUsuario =>{
-            this.usuarioService.getUsuario(solicitudUsuario.id).subscribe(user => {
-              this.listadoUsuariosSolicitudes.push(user)
-            })
-          })
-        });
+
         this.usuarioService.getUsuario(this.ofertaSeleccionada.usuarioOfertante).subscribe(user => {
           if(user){
             this.usuarioOfertante = user;
-            this.usuarioService.getImage(this.usuarioOfertante.id).then(image => {
-              this.imageUsuarioOfertante = image;
-            })
+            if(this.usuarioOfertante.image){
+              this.usuarioService.getImage(this.usuarioOfertante.id).then(image => {
+                this.imageUsuarioOfertante = image;
+              })
+            }
+            else{
+              this.imageUsuarioOfertante = of('https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/assets%2Favatar_default.png?alt=media&token=0601b1da-cca2-4663-a4b1-0fb8a731c848')
+            }
           }
         })
       }
@@ -140,9 +135,5 @@ export class DetallesOfertaEmpleoComponent implements OnInit {
       this.usuarioService.eliminarSolicitud(oferta, this.usuario.id);
       this.solicitada = false;
     }
-  }
-
-  mostrarOcultar(){
-    this.ocultado = !this.ocultado;
   }
 }

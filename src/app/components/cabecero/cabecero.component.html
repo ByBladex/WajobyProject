@@ -4,16 +4,19 @@
         <!--Menu no Collapse-->
         <div class="d-flex order-sm-1 pr-2">
             <ul class="navbar-nav flex-row">
-                <li *ngIf="isLoggedIn" class="nav-item">
-                    <a routerLink="/perfil" class="nav-link" id="item-user"><img width="30px" id="item-user-icon" src="{{image | async}}"></a>
-                </li>
+                <div class="fill">
+                   <li *ngIf="isLoggedIn" class="nav-item">
+                        <a routerLink="/perfil" class="nav-link" id="item-user"><img style="width:30px; height:30px" id="item-user-icon" src="{{image | async}}"></a>
+                    </li> 
+                </div>
+                
                 <li *ngIf="isLoggedIn" class="nav-item">
                     <a style="cursor: pointer;" (click)="logout()" class="nav-link" id="item-signOut"><i class="fas fa-sign-out-alt p-1"></i></a>
                 </li>
             </ul>
         </div>
         <!--Boton Collapse-->
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" id="btn-collapse">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" id="btn-collapse" *ngIf="!isLoggedIn">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!--Menu Collapse no logueado-->
@@ -26,7 +29,7 @@
                     <a routerLink="/registro" class="nav-link"><i class="fas fa-user-lock p-1"></i>Registrarse</a>
                 </li>
             </ul>
-            <hr class="mt-2">
+            <hr class="mt-2" *ngIf="!isLoggedIn">
         </div>
     </div>
 </nav>

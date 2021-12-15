@@ -59,7 +59,7 @@
             <div class="row">
                 <a class="btn btn-wajoby" *ngIf="!this.usuario.id" data-bs-toggle="modal" data-bs-target="#solicitarOferta">Solicitar Empleo <i class="fas fa-clipboard"></i></a>
                 <p *ngIf="this.usuario.cv === false && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" style="color: red; text-align: center;">Para solicitar un empleo necesitas subir tu curriculum antes</p>
-                <button (click)="solicitarEmpleo()" *ngIf="!solicitada && this.usuario.id && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-wajoby">Solicitar Empleo <i class="fas fa-clipboard"></i></button>
+                <button (click)="solicitarEmpleo()" [disabled]="!this.usuario.cv" *ngIf="!solicitada && this.usuario.id && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-wajoby">Solicitar Empleo <i class="fas fa-clipboard"></i></button>
                 <button (click)="eliminarSolicitud(ofertaSolicitud)" *ngIf="solicitada && this.usuario.id && ofertaSeleccionada.usuarioOfertante!=this.usuario.id" class="btn btn-danger" style="border-radius: 100px;">Eliminar solicitud <i class="fas fa-clipboard"></i></button>
             </div>
         </div>
@@ -68,12 +68,7 @@
         <app-no-encontrado></app-no-encontrado>
     </div>
 </div>
-<div class="container mt-5" *ngIf="ofertaSeleccionada?.usuarioOfertante===this.usuario.id && this.solicitudesOferta.length>0">
-    <button class="btn btn-secondary" (click)="mostrarOcultar()">Mostrar solicitudes de empleo</button>
-    <ul class="list-group mt-3" [hidden]="ocultado">
-        <li class="list-group-item" *ngFor="let usuario of listadoUsuariosSolicitudes">Id: '{{usuario.id}}' Nombre: '{{usuario.nombre}}' Apellidos: '{{usuario.apellidos}}' Email: '{{usuario.email}}'</li>
-    </ul>
-</div>
+<app-solicitudes-oferta-modal *ngIf="ofertaSeleccionada?.usuarioOfertante===this.usuario.id" [ofertaSeleccionada]="ofertaSeleccionada" [usuario]="usuario"></app-solicitudes-oferta-modal>
 <app-modal-editar-oferta *ngIf="ofertaSeleccionada?.id" [oferta]="ofertaSeleccionada" [imagen]="ofertaSeleccionada?.imagen"></app-modal-editar-oferta>
 
 

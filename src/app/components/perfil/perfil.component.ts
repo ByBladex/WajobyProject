@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Pais } from './../../models/pais.model';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -20,6 +21,8 @@ export class PerfilComponent implements OnInit {
   verificado:boolean;
   imagen:File;
   image:Observable<string>;
+
+  datosUsuario: FormGroup;
 
   paises: Pais[]=[{nombre: "Afghanistan"},{nombre: "Albania"},{nombre: "Algeria"},{nombre: "Andorra"},{nombre: "Angola"},{nombre: "Antigua and Barbuda"},{nombre: "Argentina"},{nombre: "Armenia"},
   {nombre: "Australia"},{nombre: "Austria"},{nombre: "Azerbaijan"},{nombre: "Bahamas"},{nombre: "Bahrain"},{nombre: "Bangladesh"},{nombre: "Barbados"},{nombre: "Belarus"},{nombre: "Belgium"},
@@ -62,6 +65,12 @@ export class PerfilComponent implements OnInit {
         });
       }
     })
+    this.datosUsuario = new FormGroup({
+      name: new FormControl ({value:'',disabled:true}, Validators.required),
+      surnames: new FormControl ({value:'',disabled:true}, Validators.required),
+      pais: new FormControl ({value:'',disabled:true}, Validators.required),
+      telefono: new FormControl ('', [Validators.required, Validators.minLength(9)]),
+    });
   }
 
   imagenSeleccionada(event:any){
@@ -79,22 +88,31 @@ export class PerfilComponent implements OnInit {
   }
 
   cargarImagenPerfil(){
-    if(this.imagen && (this.imagen.type === 'image/jpeg' || 'image/jpg' || 'image/png') && this.imagen.size <= 2097152){ //si el archivo existe, el tipo es jpg,png o jpeg y su tamaño es <= 2mb
-      const filePath = `users_images/${this.usuarioActivo.id}/${this.usuarioActivo.id}_profile`;
-      const task = this.storage.upload(filePath,this.imagen);
-      this.uploadPercent = task.percentageChanges();
-      console.log('imagen subida');
-      this.usuarioService.actualizarImageTrue(this.usuarioActivo.id);
-      this.usuarioService.getImage(this.usuarioActivo.id).then(image => {
-        this.image = image;
-      })
+    if(this.imagen){
+      if((this.imagen.type === 'image/jpeg' || 'image/jpg' || 'image/png') && this.imagen.size <= 2097152){ //si el archivo existe, el tipo es jpg,png o jpeg y su tamaño es <= 2mb
+        const filePath = `users_images/${this.usuarioActivo.id}/${this.usuarioActivo.id}_profile`;
+        const task = this.storage.upload(filePath,this.imagen);
+        this.uploadPercent = task.percentageChanges();
+        console.log('imagen subida');
+        this.usuarioService.actualizarImageTrue(this.usuarioActivo.id);
+        this.usuarioService.getImage(this.usuarioActivo.id).then(image => {
+          this.image = image;
+        })
+        this.imagen = null;
+      }
+      else
+        console.log("imagen nula");
     }
     else
-      console.log("imagen nula");
+      console.log("imagen no seleccionada");
   }
 
-  guardarValores(){
-    
+  guardarDatos(){
+    if(this.imagen)
+      this.cargarImagenPerfil();
+    if(!this.datosUsuario.controls.name.invalid && !this.datosUsuario.controls.surnames.invalid && !this.datosUsuario.controls.pais.invalid && !this.datosUsuario.controls.telefono.invalid){
+      this.usuarioService.modificarDatos(this.datosUsuario.value, this.usuarioActivo.id);
+    }
   }
 
 }

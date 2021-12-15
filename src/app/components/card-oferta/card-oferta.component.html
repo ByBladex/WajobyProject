@@ -1,19 +1,20 @@
 <div class="card">
-    <a class="link" routerLink="/ofertas/{{oferta.categoria}}/{{oferta.id}}">
+    <a class="link" routerLink="/ofertas/{{oferta?.categoria}}/{{oferta?.id}}">
         <div class="card-header">
-            <h3 *ngIf="oferta.titulo.length > 20">{{oferta.titulo | slice:0:20}}...</h3>
-            <h3 *ngIf="oferta.titulo.length <= 20">{{oferta.titulo}}</h3>
+            <h3 *ngIf="oferta.titulo.length > 35">{{oferta?.titulo | slice:0:35}}...</h3>
+            <h3 *ngIf="oferta.titulo.length <= 35">{{oferta?.titulo}}</h3>
         </div>
-        <div class="row">
+        <div class="row" id="cardOferta">
             <div class="col text-center">
                 <div class="card-body">
-                    <img class="img-fluid" width="300px" src="{{oferta.imagen}}">
+                    <img class="img-fluid" *ngIf="oferta?.imagen" style="max-width: 300px; max-height: 200px;" src="{{imagen}}" title="{{oferta?.titulo}}" alt="{{oferta?.titulo}} - Wajoby">
+                    <img class="img-fluid" *ngIf="!oferta?.imagen" style="max-width: 300px; max-height: 200px;" src="https://firebasestorage.googleapis.com/v0/b/wajoby-8fbf2.appspot.com/o/assets%2Fjob_default.png?alt=media&token=a22422c8-9be8-4691-b5b2-b253f0c02e4f">
                 </div>
             </div>
             <div class="col text-start">
-                <div class="card-body" style="height:100px">
-                    <p *ngIf="oferta.descripcion.length > 70">{{oferta.descripcion | slice:0:70}}...</p>
-                    <p *ngIf="oferta.descripcion.length <= 70">{{oferta.descripcion}}</p>
+                <div class="card-body" style="height:100%">
+                    <p *ngIf="oferta?.descripcion?.length > 300">{{oferta?.descripcion | slice:0:300}}...</p>
+                    <p *ngIf="oferta?.descripcion?.length <= 300">{{oferta?.descripcion}}</p>
                 </div>
             </div>
         </div>

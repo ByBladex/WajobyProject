@@ -1,3 +1,4 @@
+import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -37,7 +38,7 @@ export class ModalEditarOfertaComponent implements OnInit{
   imagenOferta:File;
   imagen:Observable<string>;
 
-  categorias= []=['infantil','fitness','mecanica','construccion','hosteleria','educacion','informatica','comercio','transporte','cuidados'];
+  categorias= []=['infantil','mecanica','construccion','hosteleria','educacion','informatica','comercio','transporte','cuidados'];
 
   constructor(private ofertasService: OfertasService, private flashMessages: FlashMessagesService, private usuarioService: UsuarioService, 
     private loginService: LoginService, private router: Router, private storage: AngularFireStorage) { }
@@ -48,8 +49,8 @@ export class ModalEditarOfertaComponent implements OnInit{
     if(this.ofertaSeleccionada.imagen){
       this.ofertasService.getImage(this.oferta.id).then(async image => {
         if(image){
-          image.subscribe(img => {
-            this.imagen = img;
+          image.subscribe(async img => {
+            this.imagen = await img;
           })
         }
       }) 
@@ -69,8 +70,14 @@ export class ModalEditarOfertaComponent implements OnInit{
           value.usuarioOfertante = auth.uid;
           value.id = this.ofertaSeleccionada.id;
           this.cargarImagenJob(value);
+          console.log(value.titulo)
           this.ofertasService.editarOferta(value,this.categoriaOfertaAntigua);
           this.usuarioService.editarOferta(value,auth.uid);
+          this.ofertasService.getSolicitudesOferta(this.ofertaSeleccionada.id, this.ofertaSeleccionada.categoria).subscribe(solicitudes => {
+            solicitudes.map(solicitudUsuario =>{
+              this.usuarioService.editarSolicitud(value.id,solicitudUsuario.id,value.categoria, value.titulo);
+            })
+          }).remove;
           this.cerrarModal();
           this.router.navigate(['/ofertas/'+value.categoria+"/"+value.id]);
           this.router.navigateByUrl('/', {skipLocationChange: false}).then(() => {
@@ -96,18 +103,31 @@ export class ModalEditarOfertaComponent implements OnInit{
   }
 
   cargarImagenJob(oferta:Oferta){
+    if(this.siImagen){
+      oferta.imagen = true;
+      this.subirImagen(oferta);
+    }
+    else{
+      oferta.imagen = false;
+      this.subirImagen(oferta);
+    }
+  }
+
+  subirImagen(oferta:Oferta){
     if(this.imagenOferta && (this.imagenOferta.type === 'image/jpeg' || 'image/jpg' || 'image/png') && this.imagenOferta.size <= 2097152){ //si el archivo existe, el tipo es jpg,png o jpeg y su tamaño es <= 2mb
-      if(oferta.imagen){
-        const filePath = `jobs_images/${oferta.id}/${oferta.id}_job`;
-        this.storage.ref(filePath).delete();
-        console.log('imagen eliminada')
-      }
+      if(this.siImagen)
+        this.eliminarImagen(oferta);
       const filePath = `jobs_images/${oferta.id}/${oferta.id}_job`;
       const task = this.storage.upload(filePath,this.imagenOferta);
       this.uploadPercent = task.percentageChanges();
       console.log('imagen subida');
       oferta.imagen = true;
     }
+  }
+  eliminarImagen(oferta:Oferta){
+    const deletePath = `jobs_images/${oferta.id}/${oferta.id}_job`;
+    this.storage.ref(deletePath).delete();
+    console.log('imagen eliminada')
   }
 
   private cerrarModal(){
