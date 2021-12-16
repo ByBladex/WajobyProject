@@ -8,7 +8,6 @@ import { Oferta } from './../../models/oferta';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-crear-oferta',

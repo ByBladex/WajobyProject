@@ -18,7 +18,7 @@ export class OfertasService {
     constructor(private db: AngularFirestore, private storage: AngularFireStorage) {
         this.ofertasCollection = this.db.collection('empleos');
     }
-    
+    //Método que recibe una cadena categoria y una cadena de id y devuelve un Observable del tipo Oferta
     getOferta(categoria:string, id:string){
         this.ofertasDoc = this.db.doc<Oferta>(`empleos/${categoria}/ofertas/${id}`);
         this.oferta = this.ofertasDoc.snapshotChanges().pipe(
@@ -35,13 +35,13 @@ export class OfertasService {
         );
         return this.oferta;
     }
-
+    //Método para generar una id única y aleatoria con una libreria llamada uuidv4
     generarID(){
       let myId = uuidv4();
       console.log(myId);
     }
 
-    //convierte el titulo de la oferta, pasa los espacios en blanco a guiones '-' y le añade la id del usuarioOfertante
+    //Método para generar una id única y aleatoria con una libreria llamada uuidv4
     genId(){
       let id = uuidv4();
       return id;
@@ -62,13 +62,13 @@ export class OfertasService {
           )
         */
     }
-
+    //Método que recibe una cadena de id oferta y devuelve una promesa
     async getImage(idOferta:string){
       const imagePath = `jobs_images/${idOferta}/${idOferta}_job`;
       const ref = this.storage.ref(imagePath);
       return ref.getDownloadURL();
     }
-
+    //Se actualiza el estado de la imagen para que el programa sepa cuando existe el archivo o no
     actualizarImageTrue(id:string){
       this.ofertasCollection.doc(id).update({imagen: true}).then(() => console.log("Imagen: True")).catch(err => console.log(err));    
     }
@@ -91,7 +91,8 @@ export class OfertasService {
       this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).set(oferta);
       console.log("Oferta registrada correctamente: "+oferta.id, oferta.titulo);
     }
-
+    /*Método de edición de la oferta que recibe la oferta y la anterior categoria de la oferta. Este método coge la oferta ya creada, crea otra oferta con los nuevos datos
+      y recorre las solicitudes de la oferta anterior y las va metiendo en la oferta nueva. Luego elimina la oferta anterior.*/
     editarOferta(oferta:Oferta, categoriaOfertaAntigua:string){
       this.db.doc<Oferta>(`empleos/${categoriaOfertaAntigua}/ofertas/${oferta.id}`).delete();
       this.db.doc<Oferta>(`empleos/${oferta.categoria}/ofertas/${oferta.id}`).set(oferta);

@@ -80,7 +80,7 @@ export class UsuarioService {
     this.db.doc<Oferta>(`usuarios/${id}/solicitudes/${idOferta}`).update({titulo: nuevoTitulo});
     console.log("Solicitud ",idOferta," editada en el usuario: ",id);
   }
-
+  //Método que recibe la cadena id del usuario y devuelve una promesa
   async getCV(idUsuario:string){
     const filePath = `users_cv/${idUsuario}/${idUsuario}_cv.pdf`;
     const ref = this.storage.ref(filePath);
