@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="ofertaSeleccionada.id">
     <section id="actions" class="py-4 mb-4 mt-4 bg-light">
         <div class="container">
             <div class="row">
@@ -68,7 +68,7 @@
         <app-no-encontrado></app-no-encontrado>
     </div>
 </div>
-<app-solicitudes-oferta-modal *ngIf="ofertaSeleccionada?.usuarioOfertante===this.usuario.id" [ofertaSeleccionada]="ofertaSeleccionada" [usuario]="usuario"></app-solicitudes-oferta-modal>
+<app-solicitudes-oferta-modal *ngIf="ofertaSeleccionada?.id && ofertaSeleccionada?.usuarioOfertante===this.usuario.id" [ofertaSeleccionada]="ofertaSeleccionada" [usuario]="usuario"></app-solicitudes-oferta-modal>
 <app-modal-editar-oferta *ngIf="ofertaSeleccionada?.id" [oferta]="ofertaSeleccionada" [imagen]="ofertaSeleccionada?.imagen"></app-modal-editar-oferta>
 
 
@@ -94,4 +94,8 @@
             </form>
         </div>
     </div>
+</div>
+
+<div class="container" *ngIf="!ofertaSeleccionada.id">
+    <app-no-encontrado></app-no-encontrado>
 </div>

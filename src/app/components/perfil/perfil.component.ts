@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Pais } from './../../models/pais.model';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -46,7 +47,7 @@ export class PerfilComponent implements OnInit {
   {nombre: "Tunisia"},{nombre: "Turkey"},{nombre: "Turkmenistan"},{nombre: "Tuvalu"},{nombre: "Uganda"},{nombre: "Ukraine"},{nombre: "United Arab Emirates"},{nombre: "United Kingdom"},{nombre: "United States"},
   {nombre: "Uruguay"},{nombre: "Uzbekistan"},{nombre: "Vanuatu"},{nombre: "Vatican City"},{nombre: "Venezuela"},{nombre: "Vietnam"},{nombre: "Yemen"},{nombre: "Zambia"},{nombre: "Zimbabwe"}];
 
-  constructor(private usuarioService: UsuarioService,private storage: AngularFireStorage, private loginService: LoginService, private flashMessages:FlashMessagesService) { }
+  constructor(private usuarioService: UsuarioService,private storage: AngularFireStorage, private loginService: LoginService, private flashMessages:FlashMessagesService, private router:Router) { }
 
   ngOnInit(): void {
     this.loginService.getAuth().subscribe( auth => {
@@ -64,6 +65,8 @@ export class PerfilComponent implements OnInit {
           }
         });
       }
+      else
+        this.router.navigate(['/login']);
     })
     this.datosUsuario = new FormGroup({
       name: new FormControl ({value:'',disabled:true}, Validators.required),
