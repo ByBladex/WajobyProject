@@ -19,7 +19,7 @@ export class PerfilComponent implements OnInit {
 
   uploadPercent: Observable<number>;
   usuarioActivo: Usuario;
-  verificado:boolean;
+  //verificado:boolean;
   imagen:File;
   image:Observable<string>;
 
@@ -52,7 +52,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
     this.loginService.getAuth().subscribe( auth => {
       if(auth){
-        this.verificado = auth.emailVerified;
+        //this.verificado = auth.emailVerified;
         this.usuarioService.getUsuario(auth.uid).subscribe( usuario => {
           this.usuarioActivo = usuario;
           if(usuario.image){
